@@ -1,8 +1,7 @@
 language: node_js
-- node
-
+node_js: 
+  - node
 install:
 - npm install
-
 after_success:
 - npm test
