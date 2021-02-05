@@ -1,3 +1,3 @@
-import SingleMatchPopup from './SingleMatchPopup';
+import TestSingleMatchPopup from './TestSingleMatchPopup';
 
-export default SingleMatchPopup;
+export default TestSingleMatchPopup;
