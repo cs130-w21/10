@@ -12,10 +12,12 @@ export default function Profile() {
     if (currentUser) {
       const ref = db.ref('Users/' + currentUser.uid);
       ref.once('value').then((snapshot) => {
+        console.log(snapshot);
         setInfo(snapshot.val().PersonalInfo);
       });
     }
   }, []);
+  console.log(info);
   return (
     <>
       <h1>Name: {info.Name}</h1>
