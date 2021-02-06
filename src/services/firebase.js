@@ -29,10 +29,23 @@ const uiConfig = {
             // User successfully signed in.
             // Return type determines whether we continue the redirect automatically
             // or whether we leave that to developer to handle.
+            console.log(authResult)
 
+            if (authResult.additionalUserInfo.isNewUser) {
+                // write user to db
+                createNewUser(
+                    authResult.user.uid,
+                    authResult.user.displayName,
+                    authResult.user.photoURL,
+                    authResult.user.email,
+                    authResult.user.phoneNumber
+                );
+                window.location.assign('/test')
+            } else {
+                window.location.assign('/');
+            }
             // Manually redirect to EditProfile if new user, otherwise home
-            authResult.additionalUserInfo.isNewUser ?
-                window.location.assign('/test') : window.location.assign('/')
+        
             return false;
         },
         uiShown: function() {
@@ -63,6 +76,34 @@ const uiConfig = {
 
 // Makes sure basic App.test.js test passes due to authorization persistence type
 // https://github.com/firebase/firebaseui-web/issues/636
+function createNewUser(uid, name, photo, email, phone) {
+    db.ref('Users/' + uid).set({
+        likedBy: [
+            'uid1',
+            'uid2'
+        ],
+        likes: [
+            'uid1',
+            'uid2'
+        ],
+        personalInfo: {
+            profilePicture: photo,
+            areaOfExpertise: [],
+            education: '',
+            name: name,
+            work: ''
+        },
+        contactInfo: {
+            email: email,
+            linkedin: '',
+            phone: phone
+        },
+        dontShow: [],
+        interests: [],
+    });
+}
+
+
 export const startFirebaseUI = function (elementId) {
     // Set up firebaseUI
     firebase
@@ -75,4 +116,5 @@ export const startFirebaseUI = function (elementId) {
         ui.start(elementId, uiConfig)
     })
 };
+
 export const db = firebase.database();
