@@ -70,4 +70,4 @@ export function getCurrentUser() {
     return firebase.auth().currentUser;
 }
 
-export default firebase.database();
+export const db = firebase.database();

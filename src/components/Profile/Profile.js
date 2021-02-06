@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import firebase, { getCurrentUser } from '../../services/firebase';
+import { db, getCurrentUser } from '../../services/firebase';
 
 export default function Profile() {
   let [info, setInfo] = useState({
@@ -10,7 +10,7 @@ export default function Profile() {
   useEffect(() => {
     const currentUser = getCurrentUser();
     if (currentUser) {
-      const ref = firebase.ref('Users/' + currentUser.uid);
+      const ref = db.ref('Users/' + currentUser.uid);
       ref.once('value').then((snapshot) => {
         setInfo(snapshot.val().PersonalInfo);
       });
