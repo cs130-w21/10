@@ -1,25 +1,24 @@
+import React from 'react';
+import {
+  Router,
+  Route,
+  Switch
+} from 'react-router-dom';
+
 import './App.css';
-import Login from './components/Login'
+import history from './history';
+import Login from './components/Login';
+import SingleMatchPopup from './components/MatchPage/SingleMatchPopup';
 
 function App() {
   return (
     <div className="App">
-      <Login />
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          hello world!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      
+      <Router history={history}>
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/single-match-popup" component={SingleMatchPopup} />
+        </Switch>
+      </Router>
     </div>
   );
 }
