@@ -1,28 +1,31 @@
 import './App.css';
 import Login from './components/Login'
-import Test from './components/Home/Test'
+import Test from './components/Test/Test'
+import Home from './components/Test/Home'
 import React from 'react';
 import {
   BrowserRouter,
   Switch,
   Route,
 } from 'react-router-dom';
+import AuthProvider from './services/AuthContext';
+import ProtectedRoute from './helpers/ProtectedRoute';
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Switch>
-          <Route path ='/login' component={Login} />
-          <Route path='/test' component={Test} />
-          <Route path='/' component={home} />
-        </Switch>
-      </BrowserRouter>      
-    </div>
+        <BrowserRouter>
+          <AuthProvider>
+            <Switch>
+              <Route path ='/login' component={Login} />
+              <ProtectedRoute exact path='/test' component={Test} />
+              <ProtectedRoute exact path='/' component={Home} />
+            </Switch>
+          </AuthProvider>
+        </BrowserRouter>      
+      </div>
   );
 }
 
-function home() {
-  return <h2>Capitalist Hinge</h2>;
-}
+
 export default App;
