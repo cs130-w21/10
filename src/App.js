@@ -1,24 +1,10 @@
-import { Profiler } from "react";
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import './App.css';
+import Login from './components/Login'
 
-import Login from "./components/Login";
-import ProfileCards from "./components/ProfileCards/ProfileCards";
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-
-          <Route path="/swipe">
-            <ProfileCards />
-          </Route>
-        </Switch>
-      </Router>
-
+      <Login />
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -33,6 +19,7 @@ function App() {
           Learn React
         </a>
       </header> */}
+      
     </div>
   );
 }
