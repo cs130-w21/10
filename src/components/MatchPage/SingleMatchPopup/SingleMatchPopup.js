@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Documentation here: https://reach.tech/dialog/
-import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog';
+import { Dialog } from '@reach/dialog';
 import '@reach/dialog/styles.css';
 
 const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {

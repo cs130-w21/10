@@ -38,7 +38,7 @@ const TestSingleMatchPopup = () => {
           ],
         });
       });
-  }, []);
+  }, [userProfile]);
 
   return (
     <div>

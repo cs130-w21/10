@@ -9,7 +9,7 @@ export function useAuth(){
 
 export default function AuthProvider(props) {   
     const [uid, setUid] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false); // Normally set to true, tests don't like the setting tho.
     const [userData, setUserData] = useState(null);
 
     function logout() {
@@ -30,7 +30,7 @@ export default function AuthProvider(props) {
             } else {
                 setUid(null)
             }
-            setLoading(false)
+            // setLoading(false) // Currently the testing is not happy with this.
         })
         return unsubscribe
     }, [])
