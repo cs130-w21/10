@@ -13,7 +13,6 @@ const firebaseConfig = {
     appId: "1:1024972331185:web:f43e8a1356ca2fe4deea90",
     measurementId: "G-0M52DMCW52"
 };
-
 firebase.initializeApp(firebaseConfig);
 
 
@@ -66,4 +65,9 @@ export const startFirebaseUI = function (elementId) {
         ui.start(elementId, uiConfig)
     })
 };
+
+export function getCurrentUser() {
+    return firebase.auth().currentUser;
+}
+
 export const db = firebase.database();

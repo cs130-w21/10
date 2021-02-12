@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders capitalist hinge app', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Capitalist Hinge/i);
-  expect(linkElement).toBeInTheDocument();
+  const linkElement = screen.getAllByText(/Capitalist Hinge/i);
+  expect(linkElement[0]).toBeInTheDocument();
 });
