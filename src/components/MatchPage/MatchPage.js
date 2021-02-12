@@ -29,20 +29,20 @@ class MatchPage extends React.Component{
 			{
 				for( let i in snapshot.val())
 				{
-					likes.add(i);
+					likes.add(snapshot.child(i).val());
 				}
-				console.log(likes);
-				likedByRef.on('value', (snapshot) => {
+				// console.log(likes);
+				likedByRef.on('value', (c_snapshot) => {
 				if(snapshot !== null)
 				{
-					for( let i in snapshot.val())
+					for( let i in c_snapshot.val())
 					{
-						likedBy.add(i);
+						likedBy.add(c_snapshot.child(i).val());
 					}
-					console.log(likedBy);
+					// console.log(likedBy);
 					let intersection = new Set([...likes].filter(x => likedBy.has(x)));
-					console.log(intersection.size);
-					console.log(Array.from(intersection));
+					// console.log(intersection.size);
+					// console.log(Array.from(intersection));
 					if (intersection.size  === 0)
 					{
 						this.setState({matches: null, hasMatches: false});
@@ -60,43 +60,71 @@ class MatchPage extends React.Component{
 
 
 	render(){
+		var opt = '';
 		if(this.state.hasMatches === undefined)
 		{
-			return(
-				<div>
-					<h1> MatchPage </h1>
-					Loading...
-				</div>
-				);
+			opt ='Loading...';
 		}
 		else if(this.state.hasMatches === false)
 		{
-			return(
-				<div>
-					<h1> MatchPage </h1>
-					No matches found!
-				</div>
-				);
+			opt='No matches found!';
 		}
 		else{
-			return(
-				<div>
-					<h1> MatchPage </h1>
-					{this.state.matches}
-				</div>
-			);
+			opt = this.state.matches.map((id) => <MatchCard key={id} user_id={id} />)
+
 		}
+		return(
+			<div>
+				<h1> Match Page </h1>
+				{opt}
+			</div>
+		);
 	}
 }
 
 class MatchCard extends React.Component{
-	constructor(id){
-		super();
-		this.state = {};
+	constructor(props){
+		super(props);
+		// this.state = {
+		// 	userInfo: undefined
+		// };
+		this.state = {
+			info: undefined
+		};
+
+	}
+
+	componentDidMount(){
+		let user_info = {}
+		const userRef = db.ref('Users/'+this.props.user_id+'/personalInfo'); 
+		userRef.on('value', (snapshot) => {
+			if(snapshot !== null)
+			{
+				for( let i in snapshot.val())
+				{
+					user_info[snapshot.child(i).key] = snapshot.child(i).val();
+				}
+				this.setState({info: user_info})
+			}
+		});
+		
 	}
 
 	render(){
-		return(<div>Hello</div>);
+		if(this.state.info !== undefined)
+		{
+			return(
+			<div>
+				{this.state.info.name}
+				<br />
+				{this.state.info.work}
+				<br />
+				{this.state.info.education}
+			</div>);
+		}
+		else{
+			return(<div></div>);
+		}
 	}
 }
 
