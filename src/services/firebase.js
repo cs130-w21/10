@@ -23,8 +23,9 @@ if (!firebase.apps.length) {
 
 export const auth = firebase.auth;
 export const db = firebase.database();
-export const createNewUser = async (uid, name, photo, email, phone) => {
-	return db.ref('Users/' + uid).set({
+// Options is an object with uid, photo, name, phone, email
+export const createNewUser = async (options) => {
+	return db.ref('Users/' + options.uid).set({
 		likedBy: [
 			'uid1',
 			'uid2'
@@ -34,16 +35,16 @@ export const createNewUser = async (uid, name, photo, email, phone) => {
 			'uid2'
 		],
 		personalInfo: {
-			profilePicture: photo,
+			profilePicture: options.photo,
 			areaOfExpertise: [],
 			education: '',
-			name: name,
+			name: options.name,
 			work: ''
 		},
 		contactInfo: {
-			email: email,
+			email: options.email,
 			linkedin: '',
-			phone: phone
+			phone: options.phone
 		},
 		dontShow: [],
 		interests: [],
