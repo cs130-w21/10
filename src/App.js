@@ -25,7 +25,7 @@ function App() {
               <ProtectedRoute exact path='/test' component={Test} />
               <ProtectedRoute exact path='/' component={Home} />
               <ProtectedRoute path='/profile' exact component={Profile} />
-              <ProtectedRoute path="/single-match-popup" component={SingleMatchPopup} />
+              <ProtectedRoute path="/matches" component={SingleMatchPopup} />
             </Switch>
           </AuthProvider>
         </Router>      
