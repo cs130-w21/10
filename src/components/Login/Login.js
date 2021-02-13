@@ -27,7 +27,14 @@ const uiConfig = {
 					authResult.user.email,
 					authResult.user.phoneNumber
 				];
-				createNewUser(uid, name, photo, email, phone)
+				let userOptions = {
+					uid,
+					name,
+					photo,
+					email,
+					phone
+				};
+				createNewUser(userOptions)
 				.then(() => {
 					// redirect after creating new user.
 					window.location.assign('/test')
