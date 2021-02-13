@@ -1,26 +1,37 @@
 import React from 'react';
 import './App.css';
-import history from './history';
 import Navbar from './components/Navigation';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './components/Login'
-import Profile from './components/Profile'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
+import AuthProvider from './services/AuthContext';
+import ProtectedRoute from './helpers/ProtectedRoute';
+import Login from './components/Login';
+import Test from './components/Test/Test';
+import Home from './components/Test/Home';
+import Profile from './components/Profile';
 import SingleMatchPopup from './components/MatchPage/SingleMatchPopup';
 import MatchPage from './components/MatchPage/MatchPage';
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route path='/' exact component={Login} />
-          <Route path='/profile' exact component={Profile} />
-          <Route path="/single-match-popup" component={SingleMatchPopup} />
-          <Route path="/matches" component={MatchPage}/>
-        </Switch>
-      </Router>
-    </div>
-  )
+        <Router>
+          <AuthProvider>
+            <Navbar />
+            <Switch>
+              <Route exact path ='/login' component={Login} />
+              <ProtectedRoute exact path='/test' component={Test} />
+              <ProtectedRoute exact path='/' component={Home} />
+              <ProtectedRoute path='/profile' exact component={Profile} />
+              <ProtectedRoute path="/matches" component={MatchPage} />
+            </Switch>
+          </AuthProvider>
+        </Router>      
+      </div>
+  );
 }
+
 
 export default App;
