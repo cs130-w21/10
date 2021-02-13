@@ -33,7 +33,7 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/single-match-popup" className="nav-links" onClick={closeMobileMenu}>
+              <Link to="/matches" className="nav-links" onClick={closeMobileMenu}>
                 Matches
               </Link>
             </li>
