@@ -14,6 +14,7 @@ import Home from './components/Test/Home';
 import Profile from './components/Profile';
 import SingleMatchPopup from './components/MatchPage/SingleMatchPopup';
 import MatchPage from './components/MatchPage/MatchPage';
+import ProfileCards from "./components/Swipe";
 function App() {
   return (
     <div className="App">
@@ -26,6 +27,7 @@ function App() {
               <ProtectedRoute exact path='/' component={Home} />
               <ProtectedRoute path='/profile' exact component={Profile} />
               <ProtectedRoute path="/matches" component={MatchPage} />
+              <ProtectedRoute path="/swipe" component={ProfileCards} />
             </Switch>
           </AuthProvider>
         </Router>      
