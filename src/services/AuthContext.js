@@ -12,6 +12,19 @@ export default function AuthProvider(props) {
     const [loading, setLoading] = useState(false); // Normally set to true, tests don't like the setting tho.
     const [userData, setUserData] = useState(null);
 
+    // A handler that updates the user data object both in the DB and context
+    // For now just overwriting data but could always change it to an actual `db.ref().update`
+    const updateUserData = (newUserData) => {
+        db.ref('Users/' + uid).set(newUserData)
+          .then(() => {
+            // Change it in the context
+            setUserData({ ...userData, ...newUserData});
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    };
+
     function logout() {
         return auth().signOut();
     }
@@ -39,6 +52,7 @@ export default function AuthProvider(props) {
         uid,
         userData,
         logout,
+        updateUserData,
     }
 
     return (
