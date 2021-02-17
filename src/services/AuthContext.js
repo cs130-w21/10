@@ -18,7 +18,7 @@ export default function AuthProvider(props) {
         db.ref('Users/' + uid).set(newUserData)
           .then(() => {
             // Change it in the context
-            setUserData({ ...userData, ...newUserData});
+            setUserData(JSON.stringify({ ...userData, ...newUserData}));
           })
           .catch((err) => {
             console.log(err);
