@@ -23,6 +23,14 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
   useEffect(() => {
     resetFormValues();
   }, [resetFormValues, isOpen]);
+  
+  const handlePersonalInfoChange = (field) => (e) => {
+    setPersonalInfo({ ...personalInfo, [field]: e.target.value });
+  };
+
+  const handleContactInfoChange = (field) => (e) => {
+    setContactInfo({ ...contactInfo, [field]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,18 +52,27 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
           <TextField
             label="Name"
             value={personalInfo.name}
-            onChange={e => setPersonalInfo({ ...personalInfo, name: e.target.value })}
+            onChange={handlePersonalInfoChange('name')}
+          />
+          <TextField
+            label="Education"
+            value={personalInfo.education}
+            onChange={handlePersonalInfoChange('education')}
+          />
+          <TextField
+            label="Work"
+            value={personalInfo.work}
+            onChange={handlePersonalInfoChange('work')}
+          />
+          <TextField
+            label="LinkedIn"
+            value={contactInfo.linkedin}
+            onChange={handleContactInfoChange('linkedin')}
           />
         </form>
       </DialogContent>
       <DialogActions>
-        <Button
-          color="secondary"
-          style={{ float: 'left' }}
-          onClick={e => resetFormValues()}
-        >
-          Reset
-        </Button>
+        <Button color="secondary" onClick={e => resetFormValues()}> Reset </Button>
         <Button color="primary" onClick={e => onDismiss()}>Cancel</Button>
         <Button color="primary" onClick={handleSubmit}>Save</Button>
       </DialogActions>
