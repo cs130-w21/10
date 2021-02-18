@@ -6,6 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from '../../services/AuthContext';
+import EditProfilePopup from './EditProfilePopup';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -39,15 +40,20 @@ export default function Profile() {
     email: "",
     linkedin: "",
   })
+
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const openEditPopup = () => setShowEditPopup(true);
+  const closeEditPopup = () => setShowEditPopup(false);
   
   useEffect(() => {
-      const userDataObject = JSON.parse(userData);
-      setPersonalInfo(userDataObject.personalInfo);
-      setContactInfo(userDataObject.contactInfo);
-      console.log(userDataObject);
+      setPersonalInfo(userData.personalInfo);
+      setContactInfo(userData.contactInfo);
+      console.log(userData);
     }, [userData]);
   return (
     <>
+      <button onClick={openEditPopup}>Edit Profile</button>
+      <EditProfilePopup isOpen={showEditPopup} onDismiss={closeEditPopup} />
       <Grid container className={classes.grid} justify="center" spacing={5}>
         
           <Grid item container xs={3} justify="center" alignItems="center">

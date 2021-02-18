@@ -1,3 +1,3 @@
-import TestEditProfilePopup from './TestEditProfilePopup';
+import EditProfilePopup from './EditProfilePopup';
 
-export default TestEditProfilePopup;
+export default EditProfilePopup;
