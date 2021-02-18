@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
-// Documentation here: https://reach.tech/dialog/
-import { Dialog } from '@reach/dialog';
-import '@reach/dialog/styles.css';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
 
 import { useAuth } from '../../../services/AuthContext';
 
@@ -12,10 +15,14 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
   const [personalInfo, setPersonalInfo] = useState({});
   const [contactInfo, setContactInfo] = useState({});
 
-  useEffect(() => {
+  const resetFormValues = useCallback(() => {
     setPersonalInfo(userData.personalInfo);
     setContactInfo(userData.contactInfo);
   }, [userData]);
+
+  useEffect(() => {
+    resetFormValues();
+  }, [resetFormValues, isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,21 +35,30 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
 
   return (
     <Dialog
-      isOpen={isOpen}
-      onDismiss={onDismiss}
-      allowPinchZoom={true}
+      open={isOpen}
+      onClose={onDismiss}
     >
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
+      <DialogTitle>Edit Your Profile</DialogTitle>
+      <DialogContent>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            label="Name"
             value={personalInfo.name}
             onChange={e => setPersonalInfo({ ...personalInfo, name: e.target.value })}
           />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+        </form>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          color="secondary"
+          style={{ float: 'left' }}
+          onClick={e => resetFormValues()}
+        >
+          Reset
+        </Button>
+        <Button color="primary" onClick={e => onDismiss()}>Cancel</Button>
+        <Button color="primary" onClick={handleSubmit}>Save</Button>
+      </DialogActions>
     </Dialog>
   );
 };
