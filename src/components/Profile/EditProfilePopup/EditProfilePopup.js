@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,15 +11,17 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 
 import { useAuth } from '../../../services/AuthContext';
-import { db } from '../../../services/firebase';
+import { db, storage, getCurrentUser } from '../../../services/firebase';
 
 const EditProfilePopup = ({ isOpen, onDismiss }) => {
   const { userData, updateUserData } = useAuth();
 
   // State for list of interests
+  // TODO: Could write new interests to DB when user inputs something new?
   const [interestsOptions, setInterestsOptions] = useState([]);
 
   // State related to form values
+  const [profilePicFile, setProfilePicFile] = useState(null);
   const [personalInfo, setPersonalInfo] = useState({});
   const [contactInfo, setContactInfo] = useState({});
   const [userInterests, setUserInterests] = useState([]);
@@ -51,6 +54,7 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
     setContactInfo({ ...contactInfo, [field]: e.target.value });
   };
 
+  // TODO: Put an alert after write to DB?
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUserData({
@@ -61,6 +65,24 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
     });
   };
 
+  // Upload image to storage
+  const handleImageUpload = (e) => {
+    const imageRef = storage.ref().child(`images/${getCurrentUser().uid}/${profilePicFile.name}`);
+    imageRef.put(profilePicFile).then((snapshot) => {
+      snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('File uploaded to: ', downloadURL);
+        // Upload pic URL to DB
+        updateUserData({
+          ...userData,
+          personalInfo: {
+            ...personalInfo,
+            profilePicture: downloadURL,
+          },
+        });
+      });
+    });
+  };
+
   return (
     <Dialog
       open={isOpen}
@@ -68,6 +90,12 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
     >
       <DialogTitle>Edit Your Profile</DialogTitle>
       <DialogContent>
+        <Avatar
+          alt={`${personalInfo.name}'s Avatar`}
+          src={personalInfo.profilePicture ? personalInfo.profilePicture : '/placeholder.jpg'}
+        />
+        <input type="file" onChange={(e) => setProfilePicFile(e.target.files[0])} />
+        <Button color="primary" onClick={handleImageUpload}>Upload Image</Button>
         <form onSubmit={handleSubmit}>
           <TextField
             label="Name"
