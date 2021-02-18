@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import TinderCard, { displayName } from "react-tinder-card";
 import { db } from "../../services/firebase";
 import "./ProfileCards.css";
-import firebase from "firebase";
+import { useAuth } from "../../services/AuthContext";
 
-function ProfileCards({ user }) {
-  user = "test";
+function ProfileCards() {
+  const { uid, userData } = useAuth();
+
   // your array is useState
   // useState is a Hook that allows you to have state variables in functional components
   // setPeople to modifiy
@@ -15,33 +16,28 @@ function ProfileCards({ user }) {
 
   useEffect(() => {
     // where the code runs
-    let users = [];
+
+    var users = [];
     var usersRef = db.ref("Users");
+
     usersRef.once("value").then((snapshot) => {
-      for (let i in snapshot) {
-        users.push(i);
-      }
-      for (let i in snapshot.val()) {
-        users.push(i);
-        db.ref("Users/" + i + "/personalInfo/name")
-          .once("value")
-          .then((snapshot) => {
-            // users.push({ key: i, name: snapshot.val() });
+      snapshot.forEach((child) => {
+        try {
+          users.push({
+            key: child.key,
+            name: child.val().personalInfo.name,
+            work: child.val().personalInfo.work,
+            education: child.val().personalInfo.education,
           });
-      }
+        } catch (Error) {
+          //if attributes in databased are missing / named incorrectly
+        }
+      });
       setPeople(users);
     });
 
     //this will run once when component loads and never again
   }, []);
-
-  const getName = (key) => {
-    db.ref("Users/" + key + "/personalInfo/name")
-      .once("value")
-      .then((snapshot) => {
-        return snapshot.val();
-      });
-  };
 
   const onSwipe = (direction, key) => {
     if (direction == "left") {
@@ -49,14 +45,9 @@ function ProfileCards({ user }) {
     }
 
     if (direction == "right") {
-      /*  db.ref("Users/" + user + "/likes").update(
-        "likes",
-        firebase.firestore.FieldValue.arrayUnion(key)
-      );
-      db.ref("Users/" + key + "/likedBy").update(
-        "likedBy",
-        firebase.firestore.FieldValue.arrayUnion(user)
-      );*/
+      db.ref("Users/" + uid + "/likes").push(key);
+
+      db.ref("Users/" + key + "/likedBy").push(uid);
     }
   };
 
@@ -66,8 +57,8 @@ function ProfileCards({ user }) {
         {people.map((person) => (
           <TinderCard
             className="swipe"
-            key={person}
-            onSwipe={(d) => onSwipe(d, person)}
+            key={person.key}
+            onSwipe={(d) => onSwipe(d, person.key)}
             preventSwipe={["up", "down"]}
           >
             <div
@@ -76,7 +67,10 @@ function ProfileCards({ user }) {
               }}
               className="card"
             >
-              <h3>{person}</h3>
+              <h2>{person.name}</h2>
+              <h3>
+                {"Work: " + person.work + " Education: " + person.education}
+              </h3>
             </div>
           </TinderCard>
         ))}
