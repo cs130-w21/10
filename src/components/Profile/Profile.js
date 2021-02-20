@@ -32,19 +32,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
   const classes = useStyles();
   const { userData } = useAuth();
-  let [userInfo] = useState(userData);
+  const [userInfo] = useState(userData);
 
 
   const [showEditPopup, setShowEditPopup] = useState(false);
   const openEditPopup = () => setShowEditPopup(true);
   const closeEditPopup = () => setShowEditPopup(false);
-  console.log(userData);
 
-  // useEffect(() => {
-  //     setPersonalInfo(userData.personalInfo);
-  //     setContactInfo(userData.contactInfo);
-  //     console.log(userData);
-  //   }, [userData]);
   return (
     <>
       <EditProfilePopup isOpen={showEditPopup} onDismiss={closeEditPopup} />
@@ -76,8 +70,7 @@ export default function Profile() {
             </Grid>
             <Grid item xs={12}>
             {
-              // TODO : map expertises instead
-            userInfo.interests.map((interest) => (
+            userInfo.expertises.map((interest) => (
               <Typography gutterBottom align="left" variant="h6" component="h6">
                 {interest}
               </Typography>

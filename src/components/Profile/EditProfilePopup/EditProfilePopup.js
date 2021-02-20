@@ -25,11 +25,13 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
   const [personalInfo, setPersonalInfo] = useState({});
   const [contactInfo, setContactInfo] = useState({});
   const [userInterests, setUserInterests] = useState([]);
+  const [userExpertises, setUserExpertises] = useState([]);
 
   const resetFormValues = useCallback(() => {
     setPersonalInfo(userData.personalInfo);
     setContactInfo(userData.contactInfo);
     setUserInterests(userData.interests ? userData.interests : []);
+    setUserExpertises(userData.expertises ? userData.expertises : []);
   }, [userData]);
 
   // Every time modal dialog opens/closes, reset the form value state.
@@ -39,7 +41,8 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
 
   // Get list of interests from db
   useEffect(() => {
-    db.ref('interests/').on('value', (snapshot) => {
+    // Since our interests list isn't getting updated for now, we can just make the query once
+    db.ref('interests/').once('value', (snapshot) => {
       if (snapshot !== null) {
         setInterestsOptions(snapshot.val());
       }
@@ -62,28 +65,35 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
       personalInfo,
       contactInfo,
       interests: userInterests,
+      expertises: userExpertises,
     });
   };
 
   // Upload image to storage
   const handleImageUpload = (e) => {
-    const imageRef = storage.ref().child(`images/${getCurrentUser().uid}/${profilePicFile.name}`);
-    imageRef.put(profilePicFile).then((snapshot) => {
-      snapshot.ref.getDownloadURL().then((downloadURL) => {
-        console.log('File uploaded to: ', downloadURL);
-        // Upload pic URL to DB
-        updateUserData({
-          ...userData,
-          personalInfo: {
-            ...personalInfo,
-            profilePicture: downloadURL,
-          },
+    // Avoid crashing app if user clicks upload image without attaching a file
+    if (profilePicFile !== null) {
+      const imageRef = storage.ref().child(`images/${getCurrentUser().uid}/${profilePicFile.name}`);
+      imageRef.put(profilePicFile).then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log('File uploaded to: ', downloadURL);
+          // Upload pic URL to DB
+          updateUserData({
+            ...userData,
+            personalInfo: {
+              ...personalInfo,
+              profilePicture: downloadURL,
+            },
+          });
+          // Also set profilePicFile to null again after upload done to avoid crash as well
+          setProfilePicFile(null);
         });
       });
-    });
+    }
   };
 
   return (
+    <>
     <Dialog
       open={isOpen}
       onClose={onDismiss}
@@ -135,6 +145,24 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
               />
             )}
           />
+          <Autocomplete
+            multiple
+            options={interestsOptions}
+            freeSolo
+            value={userExpertises}
+            onChange={(e, newValue) => setUserExpertises(newValue)}
+            renderTags={(expertises, getTagProps) =>
+              expertises.map((expertise, index) => (
+                <Chip variant="outlined" label={expertise} {...getTagProps({ index })} />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params} variant="outlined"
+                label="Areas of Expertise" placeholder="Areas of Expertise"
+              />
+            )}
+          />
         </form>
       </DialogContent>
       <DialogActions>
@@ -143,6 +171,7 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
         <Button color="primary" onClick={handleSubmit}>Save</Button>
       </DialogActions>
     </Dialog>
+    </>
   );
 };
 
