@@ -17,22 +17,20 @@ import ProfileCards from "./components/Swipe";
 function App() {
   return (
     <div className="App">
-        <Router>
-          <AuthProvider>
-            <Navbar />
-            <Switch>
-              <Route exact path ='/login' component={Login} />
-              <ProtectedRoute exact path='/test' component={Test} />
-              <ProtectedRoute exact path='/' component={Home} />
-              <ProtectedRoute path='/profile' exact component={Profile} />
-              <ProtectedRoute path="/matches" component={MatchPage} />
-              <ProtectedRoute path="/swipe" component={ProfileCards} />
-            </Switch>
-          </AuthProvider>
-        </Router>      
-      </div>
+      <Router>
+        <AuthProvider>
+          <Navbar />
+          <Switch>
+            <Route exact path="/login" component={Login} />
+            <ProtectedRoute exact path="/test" component={Test} />
+            <ProtectedRoute exact path="/" component={ProfileCards} />
+            <ProtectedRoute path="/profile" exact component={Profile} />
+            <ProtectedRoute path="/matches" component={MatchPage} />
+          </Switch>
+        </AuthProvider>
+      </Router>
+    </div>
   );
 }
-
 
 export default App;
