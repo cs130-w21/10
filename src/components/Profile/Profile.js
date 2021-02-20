@@ -76,6 +76,7 @@ export default function Profile() {
             </Grid>
             <Grid item xs={12}>
             {
+              // TODO : map expertises instead
             userInfo.interests.map((interest) => (
               <Typography gutterBottom align="left" variant="h6" component="h6">
                 {interest}
