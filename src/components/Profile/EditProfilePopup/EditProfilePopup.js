@@ -25,11 +25,13 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
   const [personalInfo, setPersonalInfo] = useState({});
   const [contactInfo, setContactInfo] = useState({});
   const [userInterests, setUserInterests] = useState([]);
+  const [userExpertises, setUserExpertises] = useState([]);
 
   const resetFormValues = useCallback(() => {
     setPersonalInfo(userData.personalInfo);
     setContactInfo(userData.contactInfo);
     setUserInterests(userData.interests ? userData.interests : []);
+    setUserExpertises(userData.expertises ? userData.expertises : []);
   }, [userData]);
 
   // Every time modal dialog opens/closes, reset the form value state.
@@ -39,7 +41,8 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
 
   // Get list of interests from db
   useEffect(() => {
-    db.ref('interests/').on('value', (snapshot) => {
+    // Since our interests list isn't getting updated for now, we can just make the query once
+    db.ref('interests/').once('value', (snapshot) => {
       if (snapshot !== null) {
         setInterestsOptions(snapshot.val());
       }
@@ -62,6 +65,7 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
       personalInfo,
       contactInfo,
       interests: userInterests,
+      expertises: userExpertises,
     });
   };
 
@@ -137,6 +141,24 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
               <TextField
                 {...params} variant="outlined"
                 label="Interests" placeholder="Interests"
+              />
+            )}
+          />
+          <Autocomplete
+            multiple
+            options={interestsOptions}
+            freeSolo
+            value={userExpertises}
+            onChange={(e, newValue) => setUserExpertises(newValue)}
+            renderTags={(expertises, getTagProps) =>
+              expertises.map((expertise, index) => (
+                <Chip variant="outlined" label={expertise} {...getTagProps({ index })} />
+              ))
+            }
+            renderInput={(params) => (
+              <TextField
+                {...params} variant="outlined"
+                label="Areas of Expertise" placeholder="Areas of Expertise"
               />
             )}
           />
