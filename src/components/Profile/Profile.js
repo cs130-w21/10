@@ -34,6 +34,13 @@ export default function Profile() {
   const { userData } = useAuth();
   const [userInfo] = useState(userData);
 
+  // just make sure these aren't null
+  if (!userData.interests) {
+    userData.interests = [];
+  }
+  if (!userData.expertises) {
+    userData.expertises = [];
+  }
 
   const [showEditPopup, setShowEditPopup] = useState(false);
   const openEditPopup = () => setShowEditPopup(true);
