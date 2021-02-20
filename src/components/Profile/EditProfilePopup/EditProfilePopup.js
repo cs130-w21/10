@@ -93,6 +93,7 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
   };
 
   return (
+    <>
     <Dialog
       open={isOpen}
       onClose={onDismiss}
@@ -170,6 +171,7 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
         <Button color="primary" onClick={handleSubmit}>Save</Button>
       </DialogActions>
     </Dialog>
+    </>
   );
 };
 
