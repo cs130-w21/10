@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
   profilePic: {
     width: "90%",
     height: "90%",
-    marginLeft: "",
   },
   interestedArea: {
     textAlign: "left",
