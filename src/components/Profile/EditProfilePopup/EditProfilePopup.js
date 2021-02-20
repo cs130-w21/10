@@ -67,20 +67,25 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
 
   // Upload image to storage
   const handleImageUpload = (e) => {
-    const imageRef = storage.ref().child(`images/${getCurrentUser().uid}/${profilePicFile.name}`);
-    imageRef.put(profilePicFile).then((snapshot) => {
-      snapshot.ref.getDownloadURL().then((downloadURL) => {
-        console.log('File uploaded to: ', downloadURL);
-        // Upload pic URL to DB
-        updateUserData({
-          ...userData,
-          personalInfo: {
-            ...personalInfo,
-            profilePicture: downloadURL,
-          },
+    // Avoid crashing app if user clicks upload image without attaching a file
+    if (profilePicFile !== null) {
+      const imageRef = storage.ref().child(`images/${getCurrentUser().uid}/${profilePicFile.name}`);
+      imageRef.put(profilePicFile).then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log('File uploaded to: ', downloadURL);
+          // Upload pic URL to DB
+          updateUserData({
+            ...userData,
+            personalInfo: {
+              ...personalInfo,
+              profilePicture: downloadURL,
+            },
+          });
+          // Also set profilePicFile to null again after upload done to avoid crash as well
+          setProfilePicFile(null);
         });
       });
-    });
+    }
   };
 
   return (
