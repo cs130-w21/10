@@ -17,9 +17,9 @@ const useStyles = makeStyles((theme) => ({
     
   },
   profilePic: {
-    width: theme.spacing(30),
-    height:theme.spacing(30),
-    marginLeft: "25%",
+    width: "90%",
+    height: "90%",
+    marginLeft: "",
   },
   interestedArea: {
     textAlign: "left",
@@ -74,7 +74,14 @@ export default function Profile() {
             <Grid item xs={7}>
               <Divider className={classes.divider} />
             </Grid>
-            
+            <Grid item xs={12}>
+            {
+            userInfo.interests.map((interest) => (
+              <Typography gutterBottom align="left" variant="h6" component="h6">
+                {interest}
+              </Typography>
+            ))};
+            </Grid>
             
           </Grid>
     
@@ -96,9 +103,7 @@ export default function Profile() {
             Bio
           </Typography>
           <Typography paragraph align="left">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            {userInfo.personalInfo.Bio || "Edit Profile to add your Bio!"}
           </Typography>
           <Typography align="left" variant="h6" component="h6">
             Work Experience
