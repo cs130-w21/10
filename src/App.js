@@ -14,10 +14,13 @@ import Home from './components/Test/Home';
 import Profile from './components/Profile';
 import MatchPage from './components/MatchPage/MatchPage';
 import ProfileCards from "./components/Swipe";
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 function App() {
   return (
     <div className="App">
       <Router>
+      <CssBaseline/>
         <AuthProvider>
           <Navbar />
           <Switch>
