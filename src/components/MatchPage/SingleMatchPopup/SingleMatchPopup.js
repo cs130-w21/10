@@ -22,7 +22,7 @@ const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
               <h4>{userProfile.name}</h4>
             </div>
             <div className="profile-company">
-              <h5>{userProfile.company}</h5>
+              <h5>{userProfile.work}</h5>
             </div>
             <div className="profile-education">
               <h5>{userProfile.education}</h5>
@@ -30,7 +30,7 @@ const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
           </div>
         </div>
         <div className="profile-bottom">
-          <div className="profile-details">
+          {/* <div className="profile-details">
             <p>{userProfile.details}</p>
           </div>
           <div className="profile-interests">
@@ -39,7 +39,7 @@ const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
                 <li>{interest}</li>
               )}
             </ul>
-          </div>
+          </div> */}
           <div className="profile-contact">
             <div>{`Email: ${userProfile.email}`}</div>
             <div>{`Phone: ${userProfile.phone}`}</div>
