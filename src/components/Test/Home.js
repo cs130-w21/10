@@ -15,7 +15,7 @@ export default function Home() {
         <div>
             <h2>Capitalist Hinge</h2>
             <p>{uid ? uid : 'no uid'}</p>
-            <p>{userData ? userData: 'no user data'}</p>
+            <p>{userData ? JSON.stringify(userData) : 'no user data'}</p>
             <button onClick={() => handleLogout()}>Sign Out</button>
         </div>
     );

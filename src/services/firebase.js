@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
+import 'firebase/storage';
 import 'firebaseui/dist/firebaseui.css'
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -23,6 +24,7 @@ if (!firebase.apps.length) {
 
 export const auth = firebase.auth;
 export const db = firebase.database();
+export const storage = firebase.storage();
 // Options is an object with uid, photo, name, phone, email
 export const createNewUser = async (options) => {
 	return db.ref('Users/' + options.uid).set({

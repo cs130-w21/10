@@ -10,7 +10,21 @@ export function useAuth(){
 export default function AuthProvider(props) {   
     const [uid, setUid] = useState(null);
     const [loading, setLoading] = useState(false); // Normally set to true, tests don't like the setting tho.
+    // NOTE: userData is no longer a JSON stringified object! It should be a regular object
     const [userData, setUserData] = useState(null);
+
+    // A handler that updates the user data object both in the DB and context
+    // For now just overwriting data but could always change it to an actual `db.ref().update`
+    const updateUserData = (newUserData) => {
+        db.ref('Users/' + uid).set(newUserData)
+          .then(() => {
+            // Change it in the context
+            // setUserData({ ...userData, ...newUserData});
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    };
 
     function logout() {
         return auth().signOut();
@@ -22,7 +36,7 @@ export default function AuthProvider(props) {
                 setUid(user.uid);
                 db.ref('Users/' + user.uid).on('value', (snapshot) => {
                     if (snapshot.exists()) {
-                        setUserData(JSON.stringify(snapshot.val()))
+                        setUserData(snapshot.val());
                     } else {
                         setUserData(null)
                     }
@@ -39,6 +53,7 @@ export default function AuthProvider(props) {
         uid,
         userData,
         logout,
+        updateUserData,
     }
 
     return (
