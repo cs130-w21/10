@@ -19,6 +19,11 @@ function Navbar() {
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className="nav-item">
+              <Link to="/test-edit-profile" className="nav-links" onClick={closeMobileMenu}>
+                TestEditProfilePopup
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link to="/matches" className="nav-links" onClick={closeMobileMenu}>
                 Matches
               </Link>

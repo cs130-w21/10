@@ -8,6 +8,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import FormLabel from '@material-ui/core/FormLabel';
 import TextField from '@material-ui/core/TextField';
 
 import { useAuth } from '../../../services/AuthContext';
@@ -22,13 +23,34 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
 
   // State related to form values
   const [profilePicFile, setProfilePicFile] = useState(null);
-  const [personalInfo, setPersonalInfo] = useState({});
+  const [personalInfo, setPersonalInfo] = useState({
+    education: {
+    },
+    work: {
+    },
+  });
   const [contactInfo, setContactInfo] = useState({});
   const [userInterests, setUserInterests] = useState([]);
   const [userExpertises, setUserExpertises] = useState([]);
 
   const resetFormValues = useCallback(() => {
-    setPersonalInfo(userData.personalInfo);
+    const dbPersonalInfo = userData.personalInfo;
+    // Populate default values of education and work in personalInfo
+    const populatedPersonalInfo = {
+      ...dbPersonalInfo,
+      education: {
+        school: dbPersonalInfo.education.school ? dbPersonalInfo.education.school : '',
+        major: dbPersonalInfo.education.major ? dbPersonalInfo.education.major : '',
+        gradYear: dbPersonalInfo.education.gradYear ? dbPersonalInfo.education.gradYear : 0,
+      },
+      work: {
+        company: dbPersonalInfo.work.company ? dbPersonalInfo.work.company : '',
+        position: dbPersonalInfo.work.position ? dbPersonalInfo.work.position : '',
+        description: dbPersonalInfo.work.description ? dbPersonalInfo.work.description : '',
+      },
+      bio: dbPersonalInfo.bio ? dbPersonalInfo.bio : '',
+    };
+    setPersonalInfo(populatedPersonalInfo);
     setContactInfo(userData.contactInfo);
     setUserInterests(userData.interests ? userData.interests : []);
     setUserExpertises(userData.expertises ? userData.expertises : []);
@@ -49,8 +71,18 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
     });
   }, []);
   
-  const handlePersonalInfoChange = (field) => (e) => {
-    setPersonalInfo({ ...personalInfo, [field]: e.target.value });
+  const handlePersonalInfoChange = (field, subfield) => (e) => {
+    if (subfield === undefined) {
+      setPersonalInfo({ ...personalInfo, [field]: e.target.value });
+    } else {
+      setPersonalInfo({
+        ...personalInfo,
+        [field]: {
+          ...personalInfo.[field],
+          [subfield]: subfield == 'gradYear' ? parseInt(e.target.value) : e.target.value,
+        }
+      });
+    }
   };
 
   const handleContactInfoChange = (field) => (e) => {
@@ -112,15 +144,43 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
             value={personalInfo.name}
             onChange={handlePersonalInfoChange('name')}
           />
+          <FormLabel>Education</FormLabel>
           <TextField
-            label="Education"
-            value={personalInfo.education}
-            onChange={handlePersonalInfoChange('education')}
+            label="School"
+            value={personalInfo.education.school ? personalInfo.education.school : ''}
+            onChange={handlePersonalInfoChange('education', 'school')}
           />
           <TextField
-            label="Work"
-            value={personalInfo.work}
-            onChange={handlePersonalInfoChange('work')}
+            label="Major"
+            value={personalInfo.education.major ? personalInfo.education.major : ''}
+            onChange={handlePersonalInfoChange('education', 'major')}
+          />
+          <TextField
+            label="Graduation Year"
+            type="number"
+            value={personalInfo.education.gradYear ? personalInfo.education.gradYear : 0}
+            onChange={handlePersonalInfoChange('education', 'gradYear')}
+          />
+          <FormLabel>Work</FormLabel>
+          <TextField
+            label="Company"
+            value={personalInfo.work.company ? personalInfo.work.company : ''}
+            onChange={handlePersonalInfoChange('work', 'company')}
+          />
+          <TextField
+            label="Position"
+            value={personalInfo.work.position ? personalInfo.work.position : ''}
+            onChange={handlePersonalInfoChange('work', 'position')}
+          />
+          <TextField
+            label="Work Description"
+            value={personalInfo.work.description ? personalInfo.work.description : ''}
+            onChange={handlePersonalInfoChange('work', 'description')}
+          />
+          <TextField
+            label="Personal Bio"
+            value={personalInfo.bio ? personalInfo.bio : ''}
+            onChange={handlePersonalInfoChange('bio')}
           />
           <TextField
             label="LinkedIn"
