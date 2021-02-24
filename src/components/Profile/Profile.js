@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Image from 'material-ui-image';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Avatar from '@material-ui/core/Avatar';
@@ -31,8 +30,27 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
   const classes = useStyles();
   const { userData } = useAuth();
-  const [userInfo] = useState(userData);
 
+  /* This is if we decide to use the EditProfile popup for redirection,
+  instead of a register page. We'd then use the incompleteProfile and pass it
+  as a prop to EditProfile, along with the onDismiss and isOpen props.
+
+  let location = useLocation();
+  let editPopupDefaultValue = false;
+  const incompleteProfile = location.state.incompleteProfile
+  if (incompleteProfile) {
+    editPopupDefaultValue = true;
+  }
+  const [showEditPopup, setShowEditPopup] = useState(editPopupDefaultValue);
+  */
+
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const openEditPopup = () => setShowEditPopup(true);
+  const closeEditPopup = () => setShowEditPopup(false);
+
+  if (!userData) {
+    return <div> Loading </div>
+  }
   // just make sure these aren't null
   if (!userData.interests) {
     userData.interests = [];
@@ -41,18 +59,15 @@ export default function Profile() {
     userData.expertises = [];
   }
 
-  const [showEditPopup, setShowEditPopup] = useState(false);
-  const openEditPopup = () => setShowEditPopup(true);
-  const closeEditPopup = () => setShowEditPopup(false);
 
   return (
     <>
-      <EditProfilePopup isOpen={showEditPopup} onDismiss={closeEditPopup} />
+      <EditProfilePopup isOpen={showEditPopup} onDismiss={closeEditPopup} /> 
       <Grid container className={classes.grid} justify="center" spacing={5}>
         
           <Grid item container xs={3} justify="center" alignItems="center">
             <Grid item xs={12}>
-              <Avatar src={userInfo.personalInfo.profilePicture} className={ classes.profilePic } style={{ justifyContent: "center", display: "flex" }}/>
+              <Avatar src={userData.personalInfo.profilePicture} className={ classes.profilePic } style={{ justifyContent: "center", display: "flex" }}/>
             </Grid>
             <Grid item xs={5}>
               AREAS OF INTEREST
@@ -62,11 +77,11 @@ export default function Profile() {
             </Grid>
             <Grid item xs={12}>
             {
-            userInfo.interests.map((interest) => (
+            userData.interests.map((interest) => (
               <Typography gutterBottom align="left" variant="h6" component="h6">
                 {interest}
               </Typography>
-            ))};
+            ))}
             </Grid>
             <Grid item xs={5}>
               AREAS OF EXPERTISE
@@ -76,11 +91,11 @@ export default function Profile() {
             </Grid>
             <Grid item xs={12}>
             {
-            userInfo.expertises.map((interest) => (
+            userData.expertises.map((interest) => (
               <Typography gutterBottom align="left" variant="h6" component="h6">
                 {interest}
               </Typography>
-            ))};
+            ))}
             </Grid>
             
           </Grid>
@@ -90,7 +105,7 @@ export default function Profile() {
       
         <Grid item xs={9}>
           <Typography align="left" variant="h4" component="h4">
-            {userInfo.personalInfo.name}
+            {userData.personalInfo.name}
             <IconButton onClick={openEditPopup}>
               <EditIcon />
             </IconButton>
@@ -103,29 +118,29 @@ export default function Profile() {
             Bio
           </Typography>
           <Typography paragraph align="left">
-            {userInfo.personalInfo.Bio || "Edit Profile to add your Bio!"}
+            {userData.personalInfo.Bio || "Edit Profile to add your Bio!"}
           </Typography>
           <Typography align="left" variant="h6" component="h6">
             Work Experience
           </Typography>
           <Typography paragraph align="left">
-            {userInfo.personalInfo.work}
+            {userData.personalInfo.work}
           </Typography>
           <Typography align="left" variant="h6" component="h6">
             Education
           </Typography>
           <Typography paragraph align="left">
-            {userInfo.personalInfo.education}
+            {userData.personalInfo.education}
           </Typography>
           <Typography align="left" variant="h6" component="h6">
             Contact Info
           </Typography>
           <Typography paragraph align="left">
-            Email: {userInfo.contactInfo.email}
+            Email: {userData.contactInfo.email}
             
           </Typography>
           <Typography paragraph align="left">
-            LinkedIn: <a href={userInfo.contactInfo.linkedin}>{userInfo.contactInfo.linkedin}</a>
+            LinkedIn: <a href={userData.contactInfo.linkedin}>{userData.contactInfo.linkedin}</a>
             
           </Typography>
           
