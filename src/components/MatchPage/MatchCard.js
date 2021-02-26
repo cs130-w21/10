@@ -30,15 +30,15 @@ function MatchCard(props) {
 
     return(
         <div className="MatchCard">
-                 <Typography variant="h3">
+                 <Typography variant="h5">
                     {info.name}
                 </Typography>
  				<br />
-                 <Typography variant="h4">
+                 <Typography variant="h6">
                     {info.work}
                 </Typography>
  				<br />
-                 <Typography variant="h4">
+                 <Typography variant="h6">
                     {info.education}
                 </Typography>
                  <br />
