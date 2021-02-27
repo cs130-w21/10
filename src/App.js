@@ -15,6 +15,7 @@ import Profile from './components/Profile';
 import MatchPage from './components/MatchPage/MatchPage';
 import ProfileCards from "./components/Swipe";
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Register from './components/Test/Register';
 
 function App() {
   return (
@@ -24,11 +25,27 @@ function App() {
         <AuthProvider>
           <Navbar />
           <Switch>
-            <Route exact path="/login" component={Login} />
-            <ProtectedRoute exact path="/test" component={Test} />
-            <ProtectedRoute exact path="/" component={ProfileCards} />
-            <ProtectedRoute path="/profile" exact component={Profile} />
-            <ProtectedRoute path="/matches" component={MatchPage} />
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <ProtectedRoute exact path="/">
+              <ProfileCards/>
+            </ProtectedRoute>
+            <ProtectedRoute exact path="/profile" profileProtection={false}>
+              <Profile/>
+            </ProtectedRoute>
+            <ProtectedRoute path="/matches">
+              <MatchPage/>
+            </ProtectedRoute>
+            {/* <Route exact path="/test">
+              <Test />
+            </Route> */}
+            {/* <Route path='/home'>
+              <Home/>
+            </Route> */}
+            <ProtectedRoute path='/register'>
+              <Register/>
+            </ProtectedRoute>
           </Switch>
         </AuthProvider>
       </Router>

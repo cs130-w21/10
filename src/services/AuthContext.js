@@ -44,7 +44,7 @@ export default function AuthProvider(props) {
             } else {
                 setUid(null)
             }
-            setLoading(false) // Currently the testing is not happy with this.
+            setLoading(false)
         })
         return unsubscribe
     }, [])
