@@ -14,7 +14,8 @@ import Home from './components/Test/Home';
 import Profile from './components/Profile';
 import MatchPage from './components/MatchPage/MatchPage';
 import ProfileCards from "./components/Swipe";
-import TestEditProfile from './components/Profile/EditProfilePopup/TestEditProfilePopup';
+import EditProfileForm from './components/Profile/EditProfileForm';
+import TestEditProfilePopup from './components/Profile/EditProfilePopup/TestEditProfilePopup';
 function App() {
   return (
     <div className="App">
@@ -25,7 +26,8 @@ function App() {
             <Route exact path="/login" component={Login} />
             <ProtectedRoute exact path="/test" component={Test} />
             <ProtectedRoute exact path="/" component={ProfileCards} />
-            <ProtectedRoute exact path="/test-edit-profile" component={TestEditProfile} />
+            <ProtectedRoute exact path="/test-edit-profile-popup" component={TestEditProfilePopup} />
+            <ProtectedRoute exact path="/test-edit-profile" component={EditProfileForm} />
             <ProtectedRoute path="/profile" exact component={Profile} />
             <ProtectedRoute path="/matches" component={MatchPage} />
           </Switch>
