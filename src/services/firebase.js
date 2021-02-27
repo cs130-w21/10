@@ -28,14 +28,8 @@ export const storage = firebase.storage();
 // Options is an object with uid, photo, name, phone, email
 export const createNewUser = async (options) => {
 	return db.ref('Users/' + options.uid).set({
-		likedBy: [
-			'uid1',
-			'uid2'
-		],
-		likes: [
-			'uid1',
-			'uid2'
-		],
+		likedBy: [],
+		likes: [],
 		personalInfo: {
 			profilePicture: options.photo,
 			areaOfExpertise: [],
