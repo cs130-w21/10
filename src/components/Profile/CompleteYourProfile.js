@@ -1,10 +1,13 @@
 import React from 'react';
+import Paper from '@material-ui/core/Paper';
 
 import EditProfileForm from './EditProfileForm';
 
 const CompleteYourProfile = () => {
   return (
-    <EditProfileForm onCancel={() => {}}/>
+    <Paper>
+      <EditProfileForm onCancel={() => {}}/>
+    </Paper>
   );
 };
 
