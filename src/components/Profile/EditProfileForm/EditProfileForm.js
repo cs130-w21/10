@@ -19,13 +19,14 @@ const EditProfileForm = ({ onCancel }) => {
     userExpertises, setUserExpertises,
     resetFormValues, submitFormValues,
     uploadImage,
+    errors,
   } = useEditProfileForm();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    submitFormValues();
-    if (onCancel)
+    if (submitFormValues() && onCancel) {
       onCancel();
+    }
   };
 
   return (
@@ -46,6 +47,8 @@ const EditProfileForm = ({ onCancel }) => {
         onClick={(e) => uploadImage()}>Upload Image</Button>
       <form onSubmit={handleSubmit}>
         <TextField
+          error={errors.name}
+          helperText={errors.name || ''}
           label="Name"
           value={personalInfo.name}
           onChange={(e) => updatePersonalInfo('name')(e.target.value)}
@@ -107,6 +110,8 @@ const EditProfileForm = ({ onCancel }) => {
           renderInput={(params) => (
             <TextField
               {...params} variant="outlined"
+              error={errors.interests}
+              helperText={errors.interests || ''}
               label="Interests" placeholder="Interests"
             />
           )}
@@ -125,6 +130,8 @@ const EditProfileForm = ({ onCancel }) => {
           renderInput={(params) => (
             <TextField
               {...params} variant="outlined"
+              error={errors.expertises}
+              helperText={errors.expertises || ''}
               label="Areas of Expertise" placeholder="Areas of Expertise"
             />
           )}

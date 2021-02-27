@@ -15,7 +15,7 @@ import Profile from './components/Profile';
 import MatchPage from './components/MatchPage/MatchPage';
 import ProfileCards from "./components/Swipe";
 import TestEditProfilePopup from './components/Profile/EditProfilePopup/TestEditProfilePopup';
-import Register from './components/Test/Register';
+import CompleteYourProfile from './components/Profile/CompleteYourProfile';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -45,8 +45,8 @@ function App() {
             {/* <Route path='/home'>
               <Home/>
             </Route> */}
-            <ProtectedRoute path='/complete-your-profile'>
-              <Register />
+            <ProtectedRoute path='/complete-your-profile' profileProtection={false}>
+              <CompleteYourProfile />
             </ProtectedRoute>
             <ProtectedRoute exact path="/test-edit-profile-popup">
               <TestEditProfilePopup />
