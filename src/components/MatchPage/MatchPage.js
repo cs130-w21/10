@@ -2,70 +2,73 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import MatchCard from './MatchCard';
 import { useAuth } from '../../services/AuthContext';
+import { Typography, Grid, FormRow  } from '@material-ui/core';
 import './MatchPage.css';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+	  flexGrow: 1,
+	},
+	paper: {
+	  margin: theme.spacing(10),
+	},
+	grid: {
+		margin: "auto"
+	}
+  }));
 
 function MatchPage() {
 	const [matches, setMatches] = useState("Loading...");
 	const {uid, userData} = useAuth();
+	const classes = useStyles();
 
 	useEffect(() => {
-		const userId = uid;
 		const user_data = userData;
-		let likes = new Set();
-		let likedBy = new Set();
-		const userRef = db.ref('Users/'+userId);
-		userRef.on('value', (snapshot) => {
-			if(snapshot !== null || snapshot !== undefined)
+		const likes = [];
+		const likedBy = [];
+		for( let i in userData.likes ){
+			if(likes.includes(userData.likes[i]) == false)
+				likes.push(userData.likes[i]);
+		}
+		for( let i in userData.likedBy)
+		{
+			if(likedBy.includes(userData.likedBy[i]) == false)
+				likedBy.push(userData.likedBy[i]);
+		}
+		const matches = likes.filter( value => likedBy.includes(value) );
+		if(matches.length === 0)
+			setMatches("No matches found!")
+		else{
+			let u = matches.map((id) => <MatchCard key={id} user_id={id} className={classes.paper}/>);
+			let k = [];
+			let temp = []
+			for(let i in u)
 			{
-				let likesRef = snapshot.child('likes');
-				let likedByRef = snapshot.child('likedBy');
-				if(likesRef.val() !== null || likesRef.val() !== undefined)
+				temp.push(u[i]);
+				if(temp.length == 4)
 				{
-					for(let i in likesRef.val())
-					{
-						likes.add(likesRef.child(i).val());
-					}
-				}
-				if(likedByRef.val() !== null || likedByRef.val() !== undefined)
-				{
-					for(let i in likedByRef.val())
-					{
-						likedBy.add(likedByRef.child(i).val());
-					}
-				}
-				let intersection = new Set([...likes].filter(x => likedBy.has(x)));
-				if (intersection.size  === 0)
-				{
-					setMatches("No matches found!");
-				}
-				else
-				{
-					// this.setState({matches: Array.from(intersection), hasMatches: true});
-					let a = Array.from(intersection);
-					let u = a.map((id) => <MatchCard key={id} user_id={id} />);
-					setMatches(u)
+					k.push(<Grid container item spacing={3} className={classes.grid}> {temp} </Grid>);
+					temp = [];
 				}
 			}
-		});
-		// const likes = [];
-		// const likedBy = [];
-		// for( let i in userData.likes )
-		// 	likes.push(userData.likes[i])
-		// for( let i in userData.likedBy)
-		// 	likedBy.push(userData.likedBy[i])
-		// const matches = likes.filter( value => likedBy.includes(value) );
-		// if(matches.length === 0)
-		// 	setMatches("No matches found!")
-		// else
-		// 	setMatches(a.map((id) => <MatchCard key{id} user_id={id} />));
+			k.push(<Grid container item  spacing={3} className={classes.grid}> {temp} </Grid>);
+			setMatches(k);
+		}
 	},[]);
 
 
 	return ( 
 	<div >
-		<h1>Match Page</h1> 
-		<div className="MatchPage"> 
-			{matches}
+		<br />
+		<Typography variant="h4"> 
+			View Your Matches
+		</Typography>
+		<br /> <br />
+		<div className="MatchPage" display="flex">
+			<Grid container spacing={1} className={classes.grid}>
+				{matches}
+			</Grid>
 		</div>
 	</div>
 	);
