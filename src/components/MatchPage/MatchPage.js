@@ -20,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 function MatchPage() {
 	const [matches, setMatches] = useState("Loading...");
-	const {uid, userData} = useAuth();
-	const classes = useStyles();
+	const {userData} = useAuth();
 
 	useEffect(() => {
 		const user_data = userData;
