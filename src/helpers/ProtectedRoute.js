@@ -26,13 +26,13 @@ export default function ProtectedRoute({children, profileProtection = true, ...r
                                 }}
                             />
                         );
-                    } /*
-                        This is for the redirection if they have an incompleteProfile.
-                        All we have to do is change the redirection URL to whichever
-                        register page we want to have.
-
-
-                        else if (profileProtection && incompleteProfile(userData)) {
+                    }
+                    /*
+                      This is for the redirection if they have an incompleteProfile.
+                      All we have to do is change the redirection URL to whichever
+                      register page we want to have.
+                    */
+                    else if (profileProtection && incompleteProfile(userData)) {
                         // If we want the page to require them to be logged in,
                         // AND have a complete profile, then profileProtection will be true.
                         // This is true for most pages, which is why it is defaulted to true.
@@ -41,12 +41,12 @@ export default function ProtectedRoute({children, profileProtection = true, ...r
                         return (
                             <Redirect 
                                 to={{
-                                    pathname: '/profile',
+                                    pathname: '/complete-your-profile',
                                     state: {incompleteProfile: true}
                                 }} 
                             />
                         );
-                    }*/
+                    }
                     return children;
                 }}
             />
