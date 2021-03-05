@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const navLinks = [
-  { title: `TestEditProfilePopup`, path: `/test-edit-profile-popup` },
   { title: `Matches`, path: `/matches` },
   { title: `Profile`, path: `/profile` },
   { title: `Sign In`, path: `/` },
