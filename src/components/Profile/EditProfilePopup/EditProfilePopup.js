@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState, useEffect, useCallback } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {
@@ -16,12 +15,6 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from '../../../services/AuthContext';
 import { db, storage, getCurrentUser } from '../../../services/firebase';
-=======
-import React, { useEffect } from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import EditProfileForm from '../EditProfileForm';
-
->>>>>>> 3eb833e616cab02c8e941c22286ec37d41208a78
 
 const useStyles = makeStyles((theme) => ({
   profilePic: {
@@ -48,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EditProfilePopup = ({ isOpen, onDismiss }) => {
-<<<<<<< HEAD
   const { userData, updateUserData } = useAuth();
   const classes = useStyles();
 
@@ -70,8 +62,6 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
     setUserExpertises(userData.expertises ? userData.expertises : []);
   }, [userData]);
 
-=======
->>>>>>> 3eb833e616cab02c8e941c22286ec37d41208a78
   // Every time modal dialog opens/closes, reset the form value state.
   // useEffect(() => {
     // resetFormValues();
@@ -85,7 +75,6 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
       fullWidth={true}
       maxWidth="sm"
     >
-<<<<<<< HEAD
       <DialogTitle>Edit Your Profile</DialogTitle>
       <DialogContent className={classes.dlog}>
         <Avatar
@@ -195,9 +184,6 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
         <Button color="primary" onClick={e => onDismiss()}>Cancel</Button>
         <Button color="primary" onClick={handleSubmit}>Save</Button>
       </DialogActions>
-=======
-      <EditProfileForm onCancel={onDismiss} />
->>>>>>> 3eb833e616cab02c8e941c22286ec37d41208a78
     </Dialog>
     </>
   );
