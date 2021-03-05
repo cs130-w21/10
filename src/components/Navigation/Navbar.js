@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const navLinks = [
-  { title: `TestEditProfilePopup`, path: `/test-edit-profile-popup` },
   { title: `Matches`, path: `/matches` },
   { title: `Profile`, path: `/profile` },
   { title: `Sign In`, path: `/` },
@@ -62,40 +61,6 @@ function Navbar() {
   const closeMobileMenu = () => setClick(false);
   const classes = useStyles();
   return (
-    // <>
-    //   <nav className="navbar">
-    //     <div className="navbar-container">
-    //       <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-    //         Capitalist Hinge
-    //       </Link>
-    //       {/* eslint-disable-next-line */}
-    //       <div className="menu-icon" onClick={handleClick}>
-    //         <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
-    //       </div>
-    //       <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-    //       <li className="nav-item">
-    //           <Link to="/matches" className="nav-links" onClick={closeMobileMenu}>
-    //             Matches
-    //           </Link>
-    //         </li>
-    //         <li className="nav-item">
-    //           <Link to="/profile" className="nav-links" onClick={closeMobileMenu}>
-    //             Profile
-    //           </Link>
-    //         </li>
-    //         <li className="nav-item">
-    //           <Link
-    //             to="/"
-    //             className="nav-links"
-    //             onClick={closeMobileMenu}
-    //           >
-    //             Sign In
-    //           </Link>
-    //         </li>
-    //       </ul>
-    //     </div>
-    //   </nav>
-    // </>
     <nav>
       <AppBar position="static">
         <Toolbar>

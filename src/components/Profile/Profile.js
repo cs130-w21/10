@@ -12,18 +12,30 @@ import EditProfilePopup from './EditProfilePopup';
 const useStyles = makeStyles((theme) => ({
   grid: {
     padding: theme.spacing(5),
-    paddingRight: "12%",
-    
+    paddingRight: theme.spacing(5),
+    minWidth: theme.spacing(150),
+
   },
   profilePic: {
-    width: "90%",
-    height: "90%",
+    width: theme.spacing(25),
+    height: theme.spacing(25),
+    overflow: "hidden",
+    marginBottom: theme.spacing(5),
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   interestedArea: {
     textAlign: "left",
   },
   divider: {
     backgroundColor: "black",
+  },
+  leftGrid: {
+    minWidth: theme.spacing(35),
+
+  },
+  rightGrid: {
+
   }
 }));
 
@@ -65,7 +77,7 @@ export default function Profile() {
       <EditProfilePopup isOpen={showEditPopup} onDismiss={closeEditPopup} /> 
       <Grid container className={classes.grid} justify="center" spacing={5}>
         
-          <Grid item container xs={3} justify="center" alignItems="center">
+          <Grid item container xs={3} justify="center" alignItems="center" className={classes.leftGrid}>
             <Grid item xs={12}>
               <Avatar src={userData.personalInfo.profilePicture} className={ classes.profilePic } style={{ justifyContent: "center", display: "flex" }}/>
             </Grid>
@@ -78,10 +90,13 @@ export default function Profile() {
             <Grid item xs={12}>
             {
             userData.interests.map((interest) => (
-              <Typography gutterBottom align="left" variant="h6" component="h6">
+              <Typography gutterBottom align="right" variant="subtitle1">
                 {interest}
+                <br />
               </Typography>
             ))}
+            <br />
+            <br />
             </Grid>
             <Grid item xs={5}>
               AREAS OF EXPERTISE
@@ -92,8 +107,9 @@ export default function Profile() {
             <Grid item xs={12}>
             {
             userData.expertises.map((interest) => (
-              <Typography gutterBottom align="left" variant="h6" component="h6">
+              <Typography gutterBottom align="right" variant="subtitle1">
                 {interest}
+                <br />
               </Typography>
             ))}
             </Grid>
@@ -103,7 +119,7 @@ export default function Profile() {
             
           
       
-        <Grid item xs={9}>
+        <Grid item xs={9} className={classes.rightGrid}>
           <Typography align="left" variant="h4" component="h4">
             {userData.personalInfo.name}
             <IconButton onClick={openEditPopup}>
@@ -113,6 +129,9 @@ export default function Profile() {
           
           <Typography gutterBottom align="left" variant="h6" component="h6">
             Position
+          </Typography>
+          <Typography paragraph align="left">
+            {userData.personalInfo.work}
           </Typography>
           <Typography align="left" variant="h6" component="h6">
             Bio
@@ -141,7 +160,7 @@ export default function Profile() {
           </Typography>
           <Typography paragraph align="left">
             LinkedIn: <a href={userData.contactInfo.linkedin}>{userData.contactInfo.linkedin}</a>
-            
+
           </Typography>
           
         </Grid>
