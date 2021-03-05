@@ -2,70 +2,115 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import MatchCard from './MatchCard';
 import { useAuth } from '../../services/AuthContext';
+import { Typography, Grid, Box  } from '@material-ui/core';
 import './MatchPage.css';
+import { makeStyles } from '@material-ui/core/styles';
+import { ArrowBackIosTwoTone } from '@material-ui/icons';
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+	  flexGrow: 1,
+	},
+	paper: {
+	  margin: theme.spacing(10),
+	},
+	grid: {
+
+	},
+	row: {
+		marginLeft: "0px",
+		marginRight: "0px",
+		width: "100%"
+	},
+	title: {
+
+	}
+  }));
 
 function MatchPage() {
+	const classes = useStyles();
 	const [matches, setMatches] = useState("Loading...");
-	const {uid, userData} = useAuth();
+	const {userData} = useAuth();
+
 
 	useEffect(() => {
-		const userId = uid;
-		const user_data = userData;
-		let likes = new Set();
-		let likedBy = new Set();
-		const userRef = db.ref('Users/'+userId);
-		userRef.on('value', (snapshot) => {
-			if(snapshot !== null || snapshot !== undefined)
-			{
-				let likesRef = snapshot.child('likes');
-				let likedByRef = snapshot.child('likedBy');
-				if(likesRef.val() !== null || likesRef.val() !== undefined)
-				{
-					for(let i in likesRef.val())
-					{
-						likes.add(likesRef.child(i).val());
-					}
-				}
-				if(likedByRef.val() !== null || likedByRef.val() !== undefined)
-				{
-					for(let i in likedByRef.val())
-					{
-						likedBy.add(likedByRef.child(i).val());
-					}
-				}
-				let intersection = new Set([...likes].filter(x => likedBy.has(x)));
-				if (intersection.size  === 0)
-				{
-					setMatches("No matches found!");
-				}
-				else
-				{
-					// this.setState({matches: Array.from(intersection), hasMatches: true});
-					let a = Array.from(intersection);
-					let u = a.map((id) => <MatchCard key={id} user_id={id} />);
-					setMatches(u)
-				}
+		if(userData)
+		{
+			const likes = [];
+			const likedBy = [];
+			for( let i in userData.likes ){
+				if(likes.includes(userData.likes[i]) == false)
+					likes.push(userData.likes[i]);
 			}
-		});
-		// const likes = [];
-		// const likedBy = [];
-		// for( let i in userData.likes )
-		// 	likes.push(userData.likes[i])
-		// for( let i in userData.likedBy)
-		// 	likedBy.push(userData.likedBy[i])
-		// const matches = likes.filter( value => likedBy.includes(value) );
-		// if(matches.length === 0)
-		// 	setMatches("No matches found!")
-		// else
-		// 	setMatches(a.map((id) => <MatchCard key{id} user_id={id} />));
-	},[]);
+			for( let i in userData.likedBy)
+			{
+				if(likedBy.includes(userData.likedBy[i]) == false)
+					likedBy.push(userData.likedBy[i]);
+			}
+			const matches = likes.filter( value => likedBy.includes(value) );
+			if(matches.length === 0)
+				setMatches("No matches found!")
+			else{
+				let u = matches.map((id) => <Grid > <MatchCard key={id} user_id={id} className={classes.paper}/> </Grid>);
+				let k = [];
+				let temp = []
+				for(let i in u)
+				{
+					temp.push(u[i]);
+					if(temp.length == 4)
+					{
+						k.push(<Grid container item
+							xs={8}  
+							sm={7}
+							md={7}
+							lg={12}
+							direction="row"
+							justify="center"
+							alignItems="center"
+							className={classes.row}> {temp} </Grid>);
+						temp = [];
+					}
+				}
+				k.push(<Grid container item
+					xs={8} 			
+					sm={7}
+					md={7}
+					lg={12}
+					direction="row"
+					justify="center"
+					alignItems="center"
+					className={classes.row}> {temp} </Grid>);
+				setMatches(k);
+			} 
+		}
+		else{
+			setMatches("Loading ...");
+		}
+	}, [userData, setMatches]);
 
 
 	return ( 
 	<div >
-		<h1>Match Page</h1> 
-		<div className="MatchPage"> 
-			{matches}
+		<br />
+		<br />
+		<Box className={classes.title}>
+		<Typography variant="h3"> 
+			View Your Matches
+		</Typography>
+		</Box>
+		<br /> <br />
+		<div className="MatchPage" display="flex">
+			<Grid 
+				container
+				item
+				spacing={1}
+				xs={12}
+				direction="column"
+				justify="center"
+				alignItems="center"
+				className={classes.grid}>
+				{matches}
+			</Grid>
 		</div>
 	</div>
 	);

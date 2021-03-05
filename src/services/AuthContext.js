@@ -38,7 +38,7 @@ export default function AuthProvider(props) {
                     if (snapshot.exists()) {
                         setUserData(snapshot.val());
                     } else {
-                        setUserData(null)
+                        setUserData()
                     }
                 });
             } else {

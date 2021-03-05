@@ -17,18 +17,23 @@ import EditProfilePopup from './EditProfilePopup';
 const useStyles = makeStyles((theme) => ({
   grid: {
     padding: theme.spacing(5),
-    paddingRight: "12%",
-    
+    paddingRight: theme.spacing(5),
+    minWidth: theme.spacing(150),
+
   },
   profilePic: {
-    width: "80%",
-    height: "80%",
+    width: theme.spacing(25),
+    height: theme.spacing(25),
+    overflow: "hidden",
+    marginBottom: theme.spacing(5),
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   interestedArea: {
     textAlign: "left",
   },
   divider: {
-    backgroundColor: "gray",
+    backgroundColor: "black",
   },
   areaTitle: {
     fontSize: "1rem",
@@ -115,10 +120,12 @@ export default function Profile() {
             <Grid item xs={12}>
             {
             userData.interests.map((interest) => (
-              <Typography align="left" variant="body1" component="h6" className={classes.areaEntry}>
+              <Typography align="right" variant="body1" component="h6" className={classes.areaEntry}>
                 {interest}
               </Typography>
             ))}
+            <br />
+            <br />
             </Grid>
             <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
             <Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
@@ -132,17 +139,13 @@ export default function Profile() {
             <Grid item xs={12}>
             {
             userData.expertises.map((interest) => (
-              <Typography align="left" variant="body1" component="h6" className={classes.areaEntry}>
+              <Typography align="right" variant="body1" component="h6" className={classes.areaEntry}>
                 {interest}
               </Typography>
             ))}
             </Grid>
               
           </Grid>
-      
-              
-            
-        
           <Grid item xs={12} sm={7} lg={8}>
             <Typography align="left" variant="h4" component="h4">
               {userData.personalInfo.name}
