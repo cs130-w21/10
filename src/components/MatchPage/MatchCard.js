@@ -33,13 +33,26 @@ const useStyles = makeStyles((theme) => ({
       borderColor: "black"
     },
     card: {
-        width: theme.spacing(25),
-        margin: theme.spacing(3),
-        justifyContent: "space-evenly"
+        width: theme.spacing(30),
+        height: theme.spacing(45),
+        margin: theme.spacing(2),
+        justifyContent: "space-evenly",
+        position: "relative",
+        paddingLeft: theme.spacing(2),
+        paddingRight: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+
     },
     bottom: {
+        justifyContent: "center",
+        position: "absolute",
+        bottom: "0",
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
+        left: "0",
+        right: "0",
+        textAlign: "center",
+        marginBottom: theme.spacing(2)
     }
   }));
 
@@ -61,7 +74,13 @@ function MatchCard(props) {
                     user_info[i] = snapshot.child('personalInfo').child(i).val();
                 for( let i in snapshot.child('contactInfo').val())
                     user_info[i] = snapshot.child('contactInfo').child(i).val();
-                user_info["button"] = (<Button onClick={openPopup} size="small" color="primary" className={classes.bottom}>View Details</Button> );
+                // user_info["expertises"] = [];
+                // user_info["interests"] = [];    
+                // for( let i in snapshot.child('expertises').val())
+                //     user_info["expertises"].push(snapshot.child('extertises').child(i).val);
+                // for( let i in snapshot.child('interests').val())
+                    // user_info["interests"].push(snapshot.child('interests').child(i).val);
+                user_info["button"] = (<Button onClick={openPopup} size="small" variant="contained" color="secondary" className={classes.bottom}>View Details</Button> );
                 setInfo(user_info);
             }
         });
@@ -75,11 +94,11 @@ function MatchCard(props) {
                     {info.name}
                 </Typography>
  				<br />
-                 <Typography variant="h7">
+                 <Typography >
                     {info.work}
                 </Typography>
  				<br />
-                 <Typography variant="h7">
+                 <Typography >
                     {info.education}
                 </Typography>
                  <br />
