@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useCallback } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {
@@ -15,6 +16,12 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from '../../../services/AuthContext';
 import { db, storage, getCurrentUser } from '../../../services/firebase';
+=======
+import React, { useEffect } from 'react';
+import Dialog from '@material-ui/core/Dialog';
+import EditProfileForm from '../EditProfileForm';
+
+>>>>>>> 3eb833e616cab02c8e941c22286ec37d41208a78
 
 const useStyles = makeStyles((theme) => ({
   profilePic: {
@@ -41,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EditProfilePopup = ({ isOpen, onDismiss }) => {
+<<<<<<< HEAD
   const { userData, updateUserData } = useAuth();
   const classes = useStyles();
 
@@ -62,63 +70,12 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
     setUserExpertises(userData.expertises ? userData.expertises : []);
   }, [userData]);
 
+=======
+>>>>>>> 3eb833e616cab02c8e941c22286ec37d41208a78
   // Every time modal dialog opens/closes, reset the form value state.
-  useEffect(() => {
-    resetFormValues();
-  }, [resetFormValues, isOpen]);
-
-  // Get list of interests from db
-  useEffect(() => {
-    // Since our interests list isn't getting updated for now, we can just make the query once
-    db.ref('interests/').once('value', (snapshot) => {
-      if (snapshot !== null) {
-        setInterestsOptions(snapshot.val());
-      }
-    });
-  }, []);
-  
-  const handlePersonalInfoChange = (field) => (e) => {
-    setPersonalInfo({ ...personalInfo, [field]: e.target.value });
-  };
-
-  const handleContactInfoChange = (field) => (e) => {
-    setContactInfo({ ...contactInfo, [field]: e.target.value });
-  };
-
-  // TODO: Put an alert after write to DB?
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    updateUserData({
-      ...userData,
-      personalInfo,
-      contactInfo,
-      interests: userInterests,
-      expertises: userExpertises,
-    });
-  };
-
-  // Upload image to storage
-  const handleImageUpload = (e) => {
-    // Avoid crashing app if user clicks upload image without attaching a file
-    if (profilePicFile !== null) {
-      const imageRef = storage.ref().child(`images/${getCurrentUser().uid}/${profilePicFile.name}`);
-      imageRef.put(profilePicFile).then((snapshot) => {
-        snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log('File uploaded to: ', downloadURL);
-          // Upload pic URL to DB
-          updateUserData({
-            ...userData,
-            personalInfo: {
-              ...personalInfo,
-              profilePicture: downloadURL,
-            },
-          });
-          // Also set profilePicFile to null again after upload done to avoid crash as well
-          setProfilePicFile(null);
-        });
-      });
-    }
-  };
+  // useEffect(() => {
+    // resetFormValues();
+  // }, [resetFormValues, isOpen]);
 
   return (
     <>
@@ -128,6 +85,7 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
       fullWidth={true}
       maxWidth="sm"
     >
+<<<<<<< HEAD
       <DialogTitle>Edit Your Profile</DialogTitle>
       <DialogContent className={classes.dlog}>
         <Avatar
@@ -237,6 +195,9 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
         <Button color="primary" onClick={e => onDismiss()}>Cancel</Button>
         <Button color="primary" onClick={handleSubmit}>Save</Button>
       </DialogActions>
+=======
+      <EditProfileForm onCancel={onDismiss} />
+>>>>>>> 3eb833e616cab02c8e941c22286ec37d41208a78
     </Dialog>
     </>
   );
