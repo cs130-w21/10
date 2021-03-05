@@ -63,9 +63,62 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
   }, [userData]);
 
   // Every time modal dialog opens/closes, reset the form value state.
-  // useEffect(() => {
-    // resetFormValues();
-  // }, [resetFormValues, isOpen]);
+  useEffect(() => {
+    resetFormValues();
+  }, [resetFormValues, isOpen]);
+
+  // Get list of interests from db
+  useEffect(() => {
+    // Since our interests list isn't getting updated for now, we can just make the query once
+    db.ref('interests/').once('value', (snapshot) => {
+      if (snapshot !== null) {
+        setInterestsOptions(snapshot.val());
+      }
+    });
+  }, []);
+  
+  const handlePersonalInfoChange = (field) => (e) => {
+    setPersonalInfo({ ...personalInfo, [field]: e.target.value });
+  };
+
+  const handleContactInfoChange = (field) => (e) => {
+    setContactInfo({ ...contactInfo, [field]: e.target.value });
+  };
+
+  // TODO: Put an alert after write to DB?
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateUserData({
+      ...userData,
+      personalInfo,
+      contactInfo,
+      interests: userInterests,
+      expertises: userExpertises,
+    });
+  };
+
+  // Upload image to storage
+  const handleImageUpload = (e) => {
+    // Avoid crashing app if user clicks upload image without attaching a file
+    if (profilePicFile !== null) {
+      const imageRef = storage.ref().child(`images/${getCurrentUser().uid}/${profilePicFile.name}`);
+      imageRef.put(profilePicFile).then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log('File uploaded to: ', downloadURL);
+          // Upload pic URL to DB
+          updateUserData({
+            ...userData,
+            personalInfo: {
+              ...personalInfo,
+              profilePicture: downloadURL,
+            },
+          });
+          // Also set profilePicFile to null again after upload done to avoid crash as well
+          setProfilePicFile(null);
+        });
+      });
+    }
+  };
 
   return (
     <>

@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     padding: theme.spacing(5),
     paddingRight: theme.spacing(5),
-    minWidth: theme.spacing(100),
+    minWidth: theme.spacing(150),
 
   },
   profilePic: {

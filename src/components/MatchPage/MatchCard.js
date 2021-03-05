@@ -74,7 +74,7 @@ function MatchCard(props) {
                     user_info[i] = snapshot.child('personalInfo').child(i).val();
                 for( let i in snapshot.child('contactInfo').val())
                     user_info[i] = snapshot.child('contactInfo').child(i).val();
-                // user_info["expertises"] = [];
+                user_info["expertises"] = snapshot.child('expertises').val();
                 // user_info["interests"] = [];    
                 // for( let i in snapshot.child('expertises').val())
                 //     user_info["expertises"].push(snapshot.child('extertises').child(i).val);
