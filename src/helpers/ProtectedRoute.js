@@ -42,7 +42,10 @@ export default function ProtectedRoute({children, profileProtection = true, ...r
                             <Redirect 
                                 to={{
                                     pathname: '/complete-your-profile',
-                                    state: {incompleteProfile: true}
+                                    state: {
+                                      incompleteProfile: true,
+                                      from: location,
+                                    }
                                 }} 
                             />
                         );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Avatar from '@material-ui/core/Avatar';
@@ -25,7 +26,12 @@ const useStyles = makeStyles((theme) => ({
   }, 
 }));
 
-const EditProfileForm = ({ onCancel }) => {
+// `onSuccessRedirectURL` prop is a URL string that tells us
+//  where to redirect to after saving.
+// `onCancel` prop is a callback that should get executed
+//  when the user presses the Cancel button.
+// Currently `onSuccessRedirectURL` is used by CompleteYourProfile page whereas `onCancel` is used by EditProfilePopup
+const EditProfileForm = ({ onSuccessRedirectURL, onCancel }) => {
   const classes = useStyles();
 
   const {
@@ -42,8 +48,13 @@ const EditProfileForm = ({ onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (submitFormValues() && onCancel) {
+    const result = submitFormValues();
+    if (result && onCancel) {
       onCancel();
+    } else if (result && onSuccessRedirectURL) {
+      return (
+        <Redirect to={onSuccessRedirectURL} />
+      );
     }
   };
 
@@ -76,7 +87,7 @@ const EditProfileForm = ({ onCancel }) => {
         <form onSubmit={handleSubmit}>
           <Grid item xs={12}>
             <TextField
-              error={errors.name}
+              error={errors.name ? true : false}
               helperText={errors.name || ''}
               label="Name"
               value={personalInfo.name ? personalInfo.name : ''}
@@ -175,7 +186,7 @@ const EditProfileForm = ({ onCancel }) => {
               renderInput={(params) => (
                 <TextField
                   {...params} variant="outlined"
-                  error={errors.interests}
+                  error={errors.interests ? true : false}
                   helperText={errors.interests || ''}
                   label="Interests" placeholder="Interests"
                 />
@@ -197,7 +208,7 @@ const EditProfileForm = ({ onCancel }) => {
               renderInput={(params) => (
                 <TextField
                   {...params} variant="outlined"
-                  error={errors.expertises}
+                  error={errors.expertises ? true : false}
                   helperText={errors.expertises || ''}
                   label="Areas of Expertise" placeholder="Areas of Expertise"
                 />
