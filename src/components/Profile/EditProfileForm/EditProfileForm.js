@@ -7,10 +7,28 @@ import Chip from '@material-ui/core/Chip';
 import FormLabel from '@material-ui/core/FormLabel';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
 import useEditProfileForm from './useEditProfileForm';
 
+const useStyles = makeStyles((theme) => ({
+  profilePic: {
+    width: theme.spacing(25),
+    height: theme.spacing(25),
+    overflow: "hidden",
+    marginBottom: theme.spacing(3),
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  dlog: {
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5)
+  }, 
+}));
+
 const EditProfileForm = ({ onCancel }) => {
+  const classes = useStyles();
+
   const {
     interestsOptions,
     setProfilePicFile,
@@ -31,7 +49,7 @@ const EditProfileForm = ({ onCancel }) => {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container className={classes.dlog}>
       <Grid item xs={12}>
         <h1>Edit Your Profile</h1>
       </Grid>
@@ -39,6 +57,7 @@ const EditProfileForm = ({ onCancel }) => {
         <Grid item xs={12}>
           <Avatar
             alt={`${personalInfo.name}'s Avatar`}
+            className={classes.profilePic}
             src={personalInfo.profilePicture ? personalInfo.profilePicture : '/placeholder.jpg'}
           />
         </Grid>
