@@ -1,16 +1,39 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
-import FormLabel from '@material-ui/core/FormLabel';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
 import useEditProfileForm from './useEditProfileForm';
 
-const EditProfileForm = ({ onCancel }) => {
+const useStyles = makeStyles((theme) => ({
+  profilePic: {
+    width: theme.spacing(25),
+    height: theme.spacing(25),
+    overflow: "hidden",
+    marginBottom: theme.spacing(3),
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  dlog: {
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5)
+  }, 
+}));
+
+// `onSuccessRedirectURL` prop is a URL string that tells us
+//  where to redirect to after saving.
+// `onCancel` prop is a callback that should get executed
+//  when the user presses the Cancel button.
+// Currently `onSuccessRedirectURL` is used by CompleteYourProfile page whereas `onCancel` is used by EditProfilePopup
+const EditProfileForm = ({ onSuccessRedirectURL, onCancel }) => {
+  const classes = useStyles();
+
   const {
     interestsOptions,
     setProfilePicFile,
@@ -25,13 +48,18 @@ const EditProfileForm = ({ onCancel }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (submitFormValues() && onCancel) {
+    const result = submitFormValues();
+    if (result && onCancel) {
       onCancel();
+    } else if (result && onSuccessRedirectURL) {
+      return (
+        <Redirect to={onSuccessRedirectURL} />
+      );
     }
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container className={classes.dlog}>
       <Grid item xs={12}>
         <h1>Edit Your Profile</h1>
       </Grid>
@@ -39,6 +67,7 @@ const EditProfileForm = ({ onCancel }) => {
         <Grid item xs={12}>
           <Avatar
             alt={`${personalInfo.name}'s Avatar`}
+            className={classes.profilePic}
             src={personalInfo.profilePicture ? personalInfo.profilePicture : '/placeholder.jpg'}
           />
         </Grid>
@@ -58,10 +87,10 @@ const EditProfileForm = ({ onCancel }) => {
         <form onSubmit={handleSubmit}>
           <Grid item xs={12}>
             <TextField
-              error={errors.name}
+              error={errors.name ? true : false}
               helperText={errors.name || ''}
               label="Name"
-              value={personalInfo.name}
+              value={personalInfo.name ? personalInfo.name : ''}
               onChange={(e) => updatePersonalInfo('name')(e.target.value)}
             />
           </Grid>
@@ -157,7 +186,7 @@ const EditProfileForm = ({ onCancel }) => {
               renderInput={(params) => (
                 <TextField
                   {...params} variant="outlined"
-                  error={errors.interests}
+                  error={errors.interests ? true : false}
                   helperText={errors.interests || ''}
                   label="Interests" placeholder="Interests"
                 />
@@ -179,7 +208,7 @@ const EditProfileForm = ({ onCancel }) => {
               renderInput={(params) => (
                 <TextField
                   {...params} variant="outlined"
-                  error={errors.expertises}
+                  error={errors.expertises ? true : false}
                   helperText={errors.expertises || ''}
                   label="Areas of Expertise" placeholder="Areas of Expertise"
                 />

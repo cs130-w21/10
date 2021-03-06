@@ -42,12 +42,16 @@ const useEditProfileForm = () => {
   // State related to form values
   const [profilePicFile, setProfilePicFile] = useState(null);
   const [personalInfo, setPersonalInfo] = useState({
+    name: '',
     education: {
     },
     work: {
     },
+    bio: '',
   });
-  const [contactInfo, setContactInfo] = useState({});
+  const [contactInfo, setContactInfo] = useState({
+    linkedin: '',
+  });
   const [userInterests, setUserInterests] = useState([]);
   const [userExpertises, setUserExpertises] = useState([]);
   // State to keep track of form errors and validation
@@ -82,7 +86,7 @@ const useEditProfileForm = () => {
 
   useEffect(() => {
     resetFormValues();
-  }, [userData]);
+  }, [resetFormValues, userData]);
 
   const updatePersonalInfo = (field, subfield) => (val) => {
     if (subfield === undefined) {
