@@ -38,7 +38,7 @@ const uiConfig = {
 				.then(() => {
 					// redirect after creating new user.
 					// @jordan change this if necessary to whatever path you need
-					window.location.assign('/register')
+					window.location.assign('/complete-your-profile')
 				}).catch((err) => {
 					console.log(err);
 					throw(err);
