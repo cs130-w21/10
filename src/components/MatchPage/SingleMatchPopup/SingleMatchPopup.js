@@ -67,7 +67,7 @@ const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
           </Typography>
           <br />
           <Typography gutterBottom align="left" variant="h6" component="h6">
-            Position
+            Work
           </Typography>
           <Typography paragraph align="left">
             {userProfile.work}
@@ -76,13 +76,7 @@ const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
             Bio
           </Typography>
           <Typography paragraph align="left">
-            {userProfile.Bio}
-          </Typography>
-          <Typography align="left" variant="h6" component="h6">
-            Work Experience
-          </Typography>
-          <Typography paragraph align="left">
-            {userProfile.work}
+            {userProfile.bio}
           </Typography>
           <Typography align="left" variant="h6" component="h6">
             Education

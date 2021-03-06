@@ -67,19 +67,45 @@ function MatchCard(props) {
     useEffect(() =>{
         const userRef = db.ref('Users/'+props.user_id);
         userRef.on('value', (snapshot) => {
-
+            const personalInfo = snapshot.child('personalInfo');
             if(snapshot !== null)
             {
-                for( let i in snapshot.child('personalInfo').val())
-                    user_info[i] = snapshot.child('personalInfo').child(i).val();
-                for( let i in snapshot.child('contactInfo').val())
+                for(let i in personalInfo.val()) {
+                    if (i == 'education') {
+                        const education = personalInfo.child(i).val();
+                        console.log(education)
+                        if (education.major && education.school) {
+                            user_info['education'] = education.major + ' @ ' + education.school;
+                        } else if (education.major) {
+                            user_info['education'] = education.major;
+                        } else if (education.school) {
+                            user_info['education'] = education.school;
+                        } else {
+                            user_info['education'] = '';
+                        }
+                    } else if (i == 'work') {
+                        const work = personalInfo.child(i).val();
+                        console.log(work)
+                        if (work.company && work.position) {
+                            user_info['work'] = work.position + ' @ ' + work.company;
+                        } else if (work.company) {
+                            user_info['work'] = work.company;
+                        } else if (work.position) {
+                            user_info['work'] = work.position;
+                        } else {
+                            user_info['work'] = '';
+                        }
+                    } else {
+                        user_info[i] = personalInfo.child(i).val()
+                    }
+                }
+                for( let i in snapshot.child('contactInfo').val()) {
+                    console.log(i)
+                    console.log(snapshot.child('contactInfo').child(i).val())
                     user_info[i] = snapshot.child('contactInfo').child(i).val();
+                }
+                user_info["interests"] = snapshot.child('interests').val();
                 user_info["expertises"] = snapshot.child('expertises').val();
-                // user_info["interests"] = [];    
-                // for( let i in snapshot.child('expertises').val())
-                //     user_info["expertises"].push(snapshot.child('extertises').child(i).val);
-                // for( let i in snapshot.child('interests').val())
-                    // user_info["interests"].push(snapshot.child('interests').child(i).val);
                 user_info["button"] = (<Button onClick={openPopup} size="small" variant="contained" color="secondary" className={classes.bottom}>View Details</Button> );
                 setInfo(user_info);
             }
@@ -90,18 +116,17 @@ function MatchCard(props) {
     return(
         <Card className={classes.card}>
                 <Avatar src={info.profilePicture} className={classes.large}/>
-                 <Typography variant="h5">
+                <Typography variant="h5">
                     {info.name}
                 </Typography>
  				<br />
-                 <Typography >
+                <Typography >
                     {info.work}
                 </Typography>
- 				<br />
-                 <Typography >
+                <Typography >
                     {info.education}
                 </Typography>
-                 <br />
+                <br />
 
                <CardActions >
                {info.button}
