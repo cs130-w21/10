@@ -3,13 +3,15 @@ import TinderCard, { displayName } from "react-tinder-card";
 import { db } from "../../services/firebase";
 import "./ProfileCards.css";
 import { useAuth } from "../../services/AuthContext";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
 
 function ProfileCards() {
   const { uid, userData } = useAuth();
 
-  // your array is useState
-  // useState is a Hook that allows you to have state variables in functional components
-  // setPeople to modifiy
   const [people, setPeople] = useState([]);
 
   useEffect(() => {
@@ -19,6 +21,7 @@ function ProfileCards() {
     const userRef = db.ref("Users/" + uid);
     userRef.on("value", (snapshot) => {
       if (snapshot !== null || snapshot !== undefined) {
+        // get array of user keys that current user liked
         let likesRef = snapshot.child("likes");
         if (likesRef.val() !== null || likesRef.val() !== undefined) {
           for (let i in likesRef.val()) {
@@ -26,17 +29,22 @@ function ProfileCards() {
           }
         }
 
+
+        // get array of user keys that current user already swiped on
         let dontSwipeRef = snapshot.child("dontSwipe");
         if (dontSwipeRef.val() !== null || dontSwipeRef.val() !== undefined) {
           for (let i in dontSwipeRef.val()) {
             dontSwipe.add(dontSwipeRef.child(i).val());
           }
         }
+        // if dontSwipe array reaches max size (10) reset array
         if (dontSwipe.size > 10) {
           db.ref("Users/" + uid + "/dontSwipe").remove();
           dontSwipe = new Set();
         }
 
+
+        // get interests of user
         let interestsRef = snapshot.child("interests");
         if (interestsRef.val() !== null || interestsRef.val() !== undefined) {
           for (let i in interestsRef.val()) {
@@ -49,36 +57,76 @@ function ProfileCards() {
     var users = [];
     var usersRef = db.ref("Users");
 
+    // iterate through all users in database
     usersRef.once("value").then((snapshot) => {
       snapshot.forEach((child) => {
         try {
+
           if (
             !(dontSwipe.has(child.key) || likes.has(child.key)) &&
             child.key != uid
           ) {
             var hasSameInterest = false;
             var childInterests = child.val().interests;
+            var childInterestsString = "Unspecified";
+
+            // get interests of certain user
             if (childInterests != undefined) {
               for (var i = 0; i < childInterests.length; i++) {
+                if (i != 0) {
+                  childInterestsString =
+                    childInterestsString + ", " + childInterests[i];
+                } else {
+                  childInterestsString = childInterests[i];
+                }
+
+                // check if user has same interest of current user we are iterating for
                 if (interests.has(childInterests[i])) {
                   hasSameInterest = true;
-                  break;
                 }
               }
+            } else {
             }
+
+            // set values to default values if not defined
+
+            var childPicture =
+              child.val().personalInfo.profilePicture == null ||
+              child.val().personalInfo.profilePicture == ""
+                ? "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"
+                : child.val().personalInfo.profilePicture;
+
+            var childWork =
+              child.val().personalInfo.work == null ||
+              child.val().personalInfo.work == ""
+                ? "Unspecified"
+                : child.val().personalInfo.work;
+
+            var childEducation =
+              child.val().personalInfo.education == null ||
+              child.val().personalInfo.education == ""
+                ? "Unspecified"
+                : child.val().personalInfo.education;
+
+            // push those with same interests to back of array
+            // which are rendered first so will be at the front of profile cards deck
             if (hasSameInterest) {
               users.push({
                 key: child.key,
                 name: child.val().personalInfo.name,
-                work: child.val().personalInfo.work,
-                education: child.val().personalInfo.education,
+                work: childWork,
+                education: childEducation,
+                url: childPicture,
+                interests: childInterestsString,
               });
             } else {
               users.unshift({
                 key: child.key,
                 name: child.val().personalInfo.name,
-                work: child.val().personalInfo.work,
-                education: child.val().personalInfo.education,
+                work: childWork,
+                education: childEducation,
+                url: childPicture,
+                interests: childInterestsString,
               });
             }
           }
@@ -93,10 +141,14 @@ function ProfileCards() {
   }, []);
 
   const onSwipe = (direction, key) => {
+    // not like
+    // add swiped user to current user's dontSwipe
     if (direction == "left") {
       db.ref("Users/" + uid + "/dontSwipe").push(key);
     }
 
+    // like
+    // add uid to liked swiped user's likedBy, add liked swiped user to current user's likes
     if (direction == "right") {
       db.ref("Users/" + uid + "/likes").push(key);
 
@@ -114,17 +166,31 @@ function ProfileCards() {
             onSwipe={(d) => onSwipe(d, person.key)}
             preventSwipe={["up", "down"]}
           >
-            <div
-              style={{
-                backgroundImage: `url("https://i.pinimg.com/originals/22/81/89/2281893b67d3f704aacd772f0569e1c4.jpg")`,
-              }}
-              className="card"
-            >
-              <h2>{person.name}</h2>
-              <h3>
-                {"Work: " + person.work + " Education: " + person.education}
-              </h3>
-            </div>
+            <Card>
+              <CardHeader title={person.name} />
+              <CardMedia className="card" image={person.url} />
+              <CardContent>
+                <Typography variant="body2" color="textPrimary" component="p">
+                  {"Work: " +
+                    person.work.position +
+                    " at " +
+                    person.work.company +
+                    ", " +
+                    person.work.description}
+                </Typography>
+                <Typography variant="body2" color="textPrimary" component="p">
+                  {"Education: " +
+                    person.education.school +
+                    " " +
+                    person.education.major +
+                    ", " +
+                    person.education.gradYear}
+                </Typography>
+                <Typography variant="body2" color="textPrimary" component="p">
+                  {"Interests: " + person.interests}
+                </Typography>
+              </CardContent>
+            </Card>
           </TinderCard>
         ))}
       </div>
