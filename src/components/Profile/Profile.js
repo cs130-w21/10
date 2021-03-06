@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   profilePic: {
     width: theme.spacing(25),
     height: theme.spacing(25),
-    overflow: "hidden",
     marginBottom: theme.spacing(5),
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -107,7 +106,7 @@ export default function Profile() {
         <Grid item xs={12} sm={8} lg={8} container className={classes.grid} justify="flex-start" spacing={5}>
           <Grid item container xs={12} sm={5} lg={4} alignItems="center" justify="flex-start">
             <Grid item xs={12} justify="center">
-              <Image src={userData.personalInfo.profilePicture || 'placeholder.jpg'} className={ classes.profilePic }/>
+              <Image src={userData.personalInfo.profilePicture || 'placeholder.jpg'} cover={true} className={ classes.profilePic }/>
             </Grid>
             <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
               <Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
