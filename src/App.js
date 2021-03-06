@@ -18,6 +18,7 @@ import TestEditProfilePopup from './components/Profile/EditProfilePopup/TestEdit
 import CompleteYourProfile from './components/Profile/CompleteYourProfile';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Register from './components/Test/Register';
 
 function App() {
   return (

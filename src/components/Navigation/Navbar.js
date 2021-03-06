@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import { Home, LinkOffOutlined } from "@material-ui/icons";
 import MenuIcon from '@material-ui/icons/Menu';
+import { useAuth } from '../../services/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +61,24 @@ function Navbar() {
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
   const classes = useStyles();
+  const { logout, uid } = useAuth();
+  let signInOrOut = uid ? `Sign Out` : `Sign In`;
+  async function handleLogout() {
+    if (!uid) {
+      return;
+    }
+    try {
+      await logout();
+    } catch {
+      throw Error('failed to log out')
+    }
+  };
+  const navLinks = [
+    { title: `TestEditProfilePopup`, path: `/test-edit-profile-popup` },
+    { title: `Matches`, path: `/matches` },
+    { title: `Profile`, path: `/profile` },
+  ];
+
   return (
     <nav>
       <AppBar position="static">
@@ -80,6 +99,11 @@ function Navbar() {
                 </ListItem>
               </Link>
             ))}
+            <Link to="/" key={signInOrOut} className={classes.linkText}>
+                <ListItem button onClick={handleLogout}>
+                  <ListItemText primary={signInOrOut} />
+                </ListItem>
+              </Link>
           </List>
         </Container>
       </Toolbar>
