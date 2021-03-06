@@ -6,10 +6,11 @@ import EditProfileForm from './EditProfileForm';
 
 const CompleteYourProfile = () => {
   const location = useLocation();
+  console.log(location);
 
   return (
     <Paper>
-      <EditProfileForm onSuccessRedirectURL={location.state.location} />
+      <EditProfileForm onSuccessRedirectURL={location.state.from.pathname} />
     </Paper>
   );
 };

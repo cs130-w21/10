@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -46,18 +46,23 @@ const EditProfileForm = ({ onSuccessRedirectURL, onCancel }) => {
     errors,
   } = useEditProfileForm();
 
+  const [redirect, setRedirect] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const result = submitFormValues();
     if (result && onCancel) {
       onCancel();
     } else if (result && onSuccessRedirectURL) {
-      return (
-        <Redirect to={onSuccessRedirectURL} />
-      );
+      setRedirect(true);
     }
   };
 
+  if (redirect) {
+    return (
+      <Redirect to={onSuccessRedirectURL} />
+    );
+  }
   return (
     <Grid container className={classes.dlog}>
       <Grid item xs={12}>
