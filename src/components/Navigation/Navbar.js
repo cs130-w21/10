@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 const navLinks = [
   { title: `Matches`, path: `/matches` },
   { title: `Profile`, path: `/profile` },
-  { title: `Sign In`, path: `/` },
 ];
 
 function Navbar() {
@@ -73,11 +72,6 @@ function Navbar() {
       throw Error('failed to log out')
     }
   };
-  const navLinks = [
-    { title: `TestEditProfilePopup`, path: `/test-edit-profile-popup` },
-    { title: `Matches`, path: `/matches` },
-    { title: `Profile`, path: `/profile` },
-  ];
 
   return (
     <nav>
