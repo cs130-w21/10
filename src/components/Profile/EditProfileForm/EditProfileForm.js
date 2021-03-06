@@ -4,7 +4,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
-import FormLabel from '@material-ui/core/FormLabel';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -80,7 +79,7 @@ const EditProfileForm = ({ onCancel }) => {
               error={errors.name}
               helperText={errors.name || ''}
               label="Name"
-              value={personalInfo.name}
+              value={personalInfo.name ? personalInfo.name : ''}
               onChange={(e) => updatePersonalInfo('name')(e.target.value)}
             />
           </Grid>
