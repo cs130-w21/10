@@ -13,7 +13,7 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
     <Dialog
       open={isOpen}
       onClose={onDismiss}
-      maxWidth='md'
+      maxWidth='lg'
     >
       <EditProfileForm onCancel={onDismiss} />
     </Dialog>
