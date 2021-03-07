@@ -10,7 +10,19 @@ const incompleteProfile = (userData) => {
     return false;
 }
 
-export default function ProtectedRoute({children, profileProtection = true, ...rest}) {
+/**
+ * @class
+ * @classdesc Routing proxy for access protection based on login and completed profile
+ * @extends React.Component
+ * @summary Checks if user is logged in, if not redirects to login page. 
+ * If user is logged in and is trying to access a page that requires a completed profile,
+ * checks if they have a completed profile; if not, redirects to complete-your-profile page, 
+ * otherwise directs to desired page.
+ * If user is logged in and does not need complete profile to access page, directs user to desired page.
+ * @prop {tree} children    the protected components to be loaded if access is allowed
+ * @prop {boolean} [profileProtection=true]     determines if page requires a completed profile
+ */
+const ProtectedRoute = ({children, profileProtection = true, ...rest}) => {
     const {uid, userData, loading} = useAuth();
     if (!loading) {
         return (
@@ -59,3 +71,5 @@ export default function ProtectedRoute({children, profileProtection = true, ...r
         return <div>Loading</div>
     }
 }
+
+export default ProtectedRoute;

@@ -33,9 +33,9 @@ export const createNewUser = async (options) => {
 		personalInfo: {
 			profilePicture: options.photo,
 			areaOfExpertise: [],
-			education: '',
+			education: {},
 			name: options.name,
-			work: ''
+			work: {}
 		},
 		contactInfo: {
 			email: options.email,
