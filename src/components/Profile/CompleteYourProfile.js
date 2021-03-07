@@ -7,6 +7,7 @@ import EditProfileForm from './EditProfileForm';
 /**
  * @class
  * @classdesc Component to render the CompleteYourProfile page. User will get redirected here if they have not completed the details in their profile
+ * @extends React.Component
  * @prop {object} location    - Object from React Router `useLocation()`.
  *                              Used to extract the target URL that the user
  *                              should be redirected to after they finish their profile.

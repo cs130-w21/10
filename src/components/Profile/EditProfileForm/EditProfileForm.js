@@ -26,11 +26,21 @@ const useStyles = makeStyles((theme) => ({
   }, 
 }));
 
-// `onSuccessRedirectURL` prop is a URL string that tells us
-//  where to redirect to after saving.
-// `onCancel` prop is a callback that should get executed
-//  when the user presses the Cancel button.
-// Currently `onSuccessRedirectURL` is used by CompleteYourProfile page whereas `onCancel` is used by EditProfilePopup
+/**
+ * @class
+ * @classdesc Component to render a form allowing users to edit their profile details.
+ *            Currently `onSuccessRedirectURL` is used by CompleteYourProfile page
+ *              whereas `onCancel` is used by EditProfilePopup
+ * @extends React.Component
+ * @param {string}    onSuccessRedirectURL  - URL that tells us where to redirect to
+ *                                            after the user successfully saves.
+ * @param {callback}  onCancel              - Callback that gets called when the user presses
+ *                                            the Cancel button.
+ * @prop {bool}       redirect              - Boolean that controls redirect behavior to
+ *                                            `onSuccessRedirectURL` (if prop passed in)
+ * @prop {UseEditProfileFormResult}         - Unpacked to the individual items to handle
+ *                                            form values or form logic
+ */
 const EditProfileForm = ({ onSuccessRedirectURL, onCancel }) => {
   const classes = useStyles();
 
@@ -48,6 +58,12 @@ const EditProfileForm = ({ onSuccessRedirectURL, onCancel }) => {
 
   const [redirect, setRedirect] = useState(false);
 
+  /**
+   * @memberof EditProfileForm
+   * @function handleSubmit
+   * @description Called when the user presses the Save/Submit button.
+   * @instance
+   */
   const handleSubmit = (e) => {
     e.preventDefault();
     const result = submitFormValues();
