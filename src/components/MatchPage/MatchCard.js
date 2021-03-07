@@ -65,12 +65,15 @@ function MatchCard(props) {
     const classes = useStyles();
 
     useEffect(() =>{
+        //given the userid, pull the information on 
         const userRef = db.ref('Users/'+props.user_id);
         userRef.on('value', (snapshot) => {
             const personalInfo = snapshot.child('personalInfo');
             if(snapshot !== null)
             {
+                //load all corresponding information into user_info 
                 for(let i in personalInfo.val()) {
+                    //load eductaion info
                     if (i == 'education') {
                         const education = personalInfo.child(i).val();
                         console.log(education)
@@ -83,7 +86,9 @@ function MatchCard(props) {
                         } else {
                             user_info['education'] = '';
                         }
-                    } else if (i == 'work') {
+                    } 
+                    //load work info
+                    else if (i == 'work') {
                         const work = personalInfo.child(i).val();
                         console.log(work)
                         if (work.company && work.position) {
@@ -96,17 +101,21 @@ function MatchCard(props) {
                             user_info['work'] = '';
                         }
                     } else {
+                        //load personal info, such as name
                         user_info[i] = personalInfo.child(i).val()
                     }
                 }
                 for( let i in snapshot.child('contactInfo').val()) {
+                    //load contact information
                     console.log(i)
                     console.log(snapshot.child('contactInfo').child(i).val())
                     user_info[i] = snapshot.child('contactInfo').child(i).val();
                 }
+                //load interests and expertises
                 user_info["interests"] = snapshot.child('interests').val();
                 user_info["expertises"] = snapshot.child('expertises').val();
                 user_info["button"] = (<Button onClick={openPopup} size="small" variant="contained" color="secondary" className={classes.bottom}>View Details</Button> );
+                //set user_info
                 setInfo(user_info);
             }
         });
@@ -114,6 +123,7 @@ function MatchCard(props) {
 
 
     return(
+        //render each profile card with corresponding information
         <Card className={classes.card}>
                 <Avatar src={info.profilePicture} className={classes.large}/>
                 <Typography variant="h5">

@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   profilePic: {
     width: theme.spacing(25),
     height: theme.spacing(25),
-    overflow: "hidden",
     marginBottom: theme.spacing(5),
     marginLeft: 'auto',
     marginRight: 'auto',
