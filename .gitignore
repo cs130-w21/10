@@ -10,6 +10,9 @@
 # testing
 /coverage
 
+# generated documentation
+/docs
+
 # production
 /build
 
