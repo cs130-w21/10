@@ -5,14 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
-  IconButton,
   List,
   ListItem,
   ListItemText,
   Container
 } from "@material-ui/core";
-import { Home, LinkOffOutlined } from "@material-ui/icons";
-import MenuIcon from '@material-ui/icons/Menu';
 import { useAuth } from '../../services/AuthContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,14 +51,28 @@ const navLinks = [
   { title: `Matches`, path: `/matches` },
   { title: `Profile`, path: `/profile` },
 ];
+/**
+ * @typedef {Object} Navbar
+ * @prop {String} uid          - The unique id of the currently logged in user 
+ * @prop {String} signInOrOut  - The label for the sign in/out button
+ */
 
-function Navbar() {
-  const [click, setClick] = useState(false);
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+/**
+ * @class
+ * @classdesc Component for navigation throughout the site, providing links to all areas the user can access
+ * @extends React.Component
+ */
+const Navbar = () => {
   const classes = useStyles();
   const { logout, uid } = useAuth();
   let signInOrOut = uid ? `Sign Out` : `Sign In`;
+ 
+  /**
+   * @memberof Navbar
+   * @function handleLogout
+   * @description Called to logout the user if they are logged in
+   * @instance
+   */
   async function handleLogout() {
     if (!uid) {
       return;
@@ -78,7 +89,7 @@ function Navbar() {
       <AppBar position="static">
         <Toolbar>
           <Container  className={classes.navbarDisplayFlex}>
-          <Link to="/" className={classes.logo} onClick={closeMobileMenu}>
+          <Link to="/" className={classes.logo}>
              Capitalist Hinge
           </Link>
           <List
