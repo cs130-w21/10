@@ -9,11 +9,30 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 
+/**
+ * @typedef {Object} ProfileCards
+ * @prop {String} uid                - The unique id of the currently logged in user
+ * @prop {Object} usersRef         - A JSON object from firebase that stores all users information
+ * @prop {Object} userRef           - A JSON object from firebase that stores current user's information
+ *
+ *
+ * @class
+ * @classdesc Component to render the Profile Cards Deck for the given user
+ * @extends React.Component
+ *
+ **/
+
 function ProfileCards() {
   const { uid, userData } = useAuth();
 
   const [people, setPeople] = useState([]);
 
+  /**
+   * @memberof ProfileCards
+   * @function setPeople
+   * @description Iterate through users in firebase database and filter users to add to profile cards deck
+   * @instance
+   */
   useEffect(() => {
     var likes = new Set();
     var dontSwipe = new Set();
@@ -140,6 +159,12 @@ function ProfileCards() {
     //this will run once when component loads and never again
   }, []);
 
+  /**
+   * @memberof ProfileCards
+   * @function onSwipe
+   * @description Handle when a user swipe left/right on a profile card and add to firebase database
+   * @instance
+   */
   const onSwipe = (direction, key) => {
     // not like
     // add swiped user to current user's dontSwipe
