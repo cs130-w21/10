@@ -104,7 +104,7 @@ const validate = (userValues) => {
 
 /**
  * @function useEditProfileForm
- * @description A custom React Hook to manage the state and actions for the Edit Profile form.
+ * @description A custom React Hook to manage the state and actions for the [Edit Profile form]{@link EditProfileForm}.
  * @returns {UseEditProfileFormResult}
  */
 const useEditProfileForm = () => {

@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
 /**
  * @class
  * @classdesc Component to render a form allowing users to edit their profile details.
- *            Currently `onSuccessRedirectURL` is used by CompleteYourProfile page
- *              whereas `onCancel` is used by EditProfilePopup
+ *            Currently `onSuccessRedirectURL` is used by [CompleteYourProfile]{@link CompleteYourProfile} page
+ *              whereas `onCancel` is used by [EditProfilePopup]{@link EditProfilePopup}.
  * @extends React.Component
  * @param {string}    onSuccessRedirectURL  - URL that tells us where to redirect to
  *                                            after the user successfully saves.
