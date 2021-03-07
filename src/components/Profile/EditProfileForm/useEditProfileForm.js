@@ -3,8 +3,62 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../../services/AuthContext';
 import { db, storage, getCurrentUser } from '../../../services/firebase';
 
-// Validation function for the form data
-// `userValues` has the same structure as `userData`.
+/**
+ * @typedef {Object} UserWork
+ * @prop {string} company     - A user's current company
+ * @prop {string} position    - A user's current position
+ * @prop {string} description - A description of the user's work
+ */
+
+/**
+ * @typedef {Object} UserEducation
+ * @prop {string} school    - A user's alma mater
+ * @prop {string} major     - A user's major
+ * @prop {string} gradYear  - The year the user graduated from their most recent education
+ */
+
+/**
+ * @typedef {Object} UserPersonalInfo
+ * @prop {string} name              - A user's name
+ * @prop {UserEducation} education  - A user's education details
+ * @prop {UserWork} work            - A user's employment/work details
+ * @prop {string} bio               - A user's personal biography
+ */
+
+/**
+ * @typedef {Object} UserContactInfo
+ * @prop {string} email     - A user's email
+ * @prop {string} linkedin  - A user's linkedin URL
+ * @prop {string} phone     - A user's phone number
+ */
+
+/**
+ * @typedef {Object} UserData
+ * @prop {UserPersonalInfo} personalInfo  - A user's personal information
+ * @prop {UserContactInfo} contactInfo    - A user's contact information
+ * @prop {array} interests                - An array of a user's interests. Each entry is a `string`.
+ * @prop {array} expertises               - An array of a user's areas of expertise. Each entry is a `string`.
+ */
+
+/**
+ * @module useEditProfileForm
+ */
+
+/**
+ * @global
+ * @typedef {Object} Errors
+ * An object whose key-value pairs are the form fields that have
+ *    errors paired with the helper text for that form field.
+ */
+
+/**
+ * @function validate
+ * @param {UserData} userValues   - All the details related to a user.
+ * @description Validation function for the form data.
+ *              Currently requires a name, at least one interest,
+ *              and at least one area of expertise.
+ * @returns {Errors} 
+ */
 const validate = (userValues) => {
   const errors = {};
   if (!userValues.personalInfo.name) {
@@ -20,8 +74,38 @@ const validate = (userValues) => {
   return errors;
 };
 
-/*
- * A custom React Hook to manage the state and actions for the Edit Profile form.
+/**
+ * @global
+ * @typedef {Object} UseEditProfileFormResult
+ * @prop {array} interestsOptions         - A list of User Interests. Used for autocomplete suggestions.
+ * @prop {callback} setProfilePicFile     - A function callback that sets the profile picture
+ *                                          file in `useEditProfileForm`'s internal state.
+ * @prop {UserPersonalInfo} personalInfo  - A user's current mid-edit personal info.
+ * @prop {callback} updatePersonalInfo    - A function callback that sets `personalInfo` in
+ *                                          `useEditProfileForm`'s internal state.
+ * @prop {UserContactInfo} contactInfo    - A user's current mid-edit contact info.
+ * @prop {callback} updateContactInfo     - A function callback that sets `contactInfo` in
+ *                                          `useEditProfileForm`'s internal state.
+ * @prop {array} userInterests            - A user's current mid-edit list of interests.
+ * @prop {callback} setUserInterests      - A function callback that sets `userInterests` in
+ *                                          `useEditProfileForm`'s internal state.
+ * @prop {array} userExpertises           - A user's current mid-edit list of areas of expertise.
+ * @prop {callback} setUserExpertises     - A function callback that sets `userExpertises` in
+ *                                          `useEditProfileForm`'s internal state.
+ * @prop {callback} resetFormValues       - A function callback that resets the form values to
+ *                                          the UserData according to the database.
+ * @prop {callback} submitFormValues      - A function callback that saves the form values to
+ *                                          the database if there are no validation errors.
+ * @prop {callback} uploadImage           - A function callback that will upload the photo to
+ *                                          the cloud storage and store the URL to the
+ *                                          user's profile
+ * @prop {Errors} errors                  - Set after validating the current form values.
+ */
+
+/**
+ * @function useEditProfileForm
+ * @description A custom React Hook to manage the state and actions for the [Edit Profile form]{@link EditProfileForm}.
+ * @returns {UseEditProfileFormResult}
  */
 const useEditProfileForm = () => {
   const { userData, updateUserData } = useAuth();

@@ -51,9 +51,20 @@ const useStyles = makeStyles((theme) => ({
  * @class
  * @classdesc Component to render a Popup for a user's single match object
  * @extends React.Component
- * @prop {boolean}                  isOpen        - A boolean to control whether the popup should be displayed or hidden.
- * @prop {callback}                 onDismiss     - A callback that will be called when a user tries to exit the Dialog/Popup.
- * @prop {SingleMatchUserProfile}   userProfile   - A JSON object that contains all the data needed to render that user's single match.
+ * @param {boolean}                  isOpen        - A boolean to control whether the popup should be displayed or hidden.
+ * @param {callback}                 onDismiss     - A callback that will be called when a user tries to exit the Dialog/Popup.
+ * @param {SingleMatchUserProfile}   userProfile   - A JSON object that contains all the data needed to render that user's single match.
+ * 
+ * @example
+ * // In this example, popup stays open and has no way to be closed
+ * test_profile = { name: 'hello', work: 'Unemployed' ...}
+ * <SingleMatchPopup isOpen={true} userProfile={test_profile} />
+ *
+ * @example
+ * // A typical use case
+ * test_profile = { name: 'hello', work: 'Unemployed' ...}
+ * const [open, setOpen] = useState(false);
+ * <SingleMatchPopup isOpen={open} onDismiss={() => setOpen(!open)} userProfile={test_profile} />
  */
 const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
   const classes = useStyles();
