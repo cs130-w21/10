@@ -6,15 +6,36 @@ export function useAuth(){
     return useContext(AuthContext);
 }
 
-
-export default function AuthProvider(props) {   
+/**
+ * @class
+ * @classdesc Provider for Authentication Context, to be used in all components that require authentication or current
+ * user's data from database
+ * @extends React.Component
+ * @param {Object} props holds children components that require the AuthContext
+ * @summary Holds relevant information for authentication and current user data. Allows other components
+ * to see this information via React Context. 
+ */
+const AuthProvider = (props) => {   
+    /**
+     * @memberof AuthProvider
+     * @var {string} uid unique ID of current user
+     */
     const [uid, setUid] = useState(null);
+    /**
+     * @memberof AuthProvider
+     * @var {boolean} loading Checks if context values are loading 
+     */
     const [loading, setLoading] = useState(false); // Normally set to true, tests don't like the setting tho.
-    // NOTE: userData is no longer a JSON stringified object! It should be a regular object
+    /**
+     * @memberof AuthProvider
+     * @var {Object} userData data from database on current user
+     */
     const [userData, setUserData] = useState(null);
 
-    // A handler that updates the user data object both in the DB and context
-    // For now just overwriting data but could always change it to an actual `db.ref().update`
+    /**
+     * A handler that updates the user data object in the database
+     * @param {Object} newUserData the new user data for the current user to write to the database
+     */
     const updateUserData = (newUserData) => {
         db.ref('Users/' + uid).set(newUserData)
           .then(() => {
@@ -26,6 +47,10 @@ export default function AuthProvider(props) {
           });
     };
 
+    /**
+     * Container for logging out user.
+     * @returns auth function to logout user (for our case, firebase auth signOut function)
+     */
     function logout() {
         return auth().signOut();
     }
@@ -49,8 +74,13 @@ export default function AuthProvider(props) {
         return unsubscribe
     }, [])
   
+    /**
+     * @memberof AuthProvider
+     * @var {Object} value Holds context values (the other members and methods of AuthProvider)
+     */
     const value = {
         uid,
+        loading,
         userData,
         logout,
         updateUserData,
@@ -62,3 +92,5 @@ export default function AuthProvider(props) {
         </AuthContext.Provider>
     )
 }
+
+export default AuthProvider;

@@ -76,7 +76,16 @@ const startFirebaseUI = (elementId) => {
 	})
 };
 
-export default function Login() {
+/**
+ * @class
+ * @classdesc Component to render Login page
+ * @extends React.Component
+ * @summary When rendering the component, it first checks if there is already a logged-in user.
+ * If so, it redirects the user to the page they may have been originally trying to go to (or the home page by default).
+ * If there is no user, then it renders the login page using FirebaseUI.
+ */
+const Login = () => {
+
 	const { uid, loading } = useAuth()
 	let location = useLocation();
 
@@ -97,4 +106,6 @@ export default function Login() {
 	} else {
 		return (<div>Loading</div>)
 	}
-}
+};
+
+export default Login;
