@@ -55,17 +55,37 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-/*
-This is the profile component. It is a protected page, so it should only be able to be accessed by
-registered users who have completed their profile. If the user is successfully able to access it, it 
-gets their data from the firebase realtime database and loads it onto the page. Otherwise, it redirects
-them to either the login page or the complete-your-profile page. 
-*/
-export default function Profile() {
+/**
+ * @global
+ * @typedef {Object} Profile
+ * @prop {bool} showEditPopup        - The state that determines whether the EditProfilePopup is shown or not
+ * @prop {callback} setShowEditPopup - A function callback that sets the showEditPopup boolean in the internal state of Profile
+ * @prop {Object} userData           - A JSON object that contains all the user's info, retrieved from firebase
+ */
+
+/**
+ * @class
+ * @classdesc Component to render the Profile page of any logged in user
+ * @extends React.Component
+ */
+
+const Profile = () => {
   const classes = useStyles();
   const { userData } = useAuth();
   const [showEditPopup, setShowEditPopup] = useState(false);
+  /**
+   * @memberof Profile
+   * @function openEditPopup
+   * @description Called to open the edit profile popup and allow user to edit it
+   * @instance
+   */
   const openEditPopup = () => setShowEditPopup(true);
+    /**
+   * @memberof Profile
+   * @function openEditPopup
+   * @description Called to close the edit profile popup
+   * @instance
+   */
   const closeEditPopup = () => setShowEditPopup(false);
 
   if (!userData) {
@@ -193,3 +213,5 @@ export default function Profile() {
   );
   
 }
+
+export default Profile;
