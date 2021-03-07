@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
-import Avatar from '@material-ui/core/Avatar';
+import Image from 'material-ui-image';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import EmailIcon from '@material-ui/icons/Email';
 import { useAuth } from '../../services/AuthContext';
 import EditProfilePopup from './EditProfilePopup';
 
@@ -19,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
   profilePic: {
     width: theme.spacing(25),
     height: theme.spacing(25),
-    overflow: "hidden",
     marginBottom: theme.spacing(5),
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -30,32 +31,39 @@ const useStyles = makeStyles((theme) => ({
   divider: {
     backgroundColor: "black",
   },
-  leftGrid: {
-    minWidth: theme.spacing(35),
-
+  areaTitle: {
+    fontSize: "1rem",
+    fontWeight: "500",
+    lineHeight: "1.75",
+    color: "#808080",
   },
-  rightGrid: {
-
+  mainTitle: {
+    fontSize: "1.4rem",
+    fontWeight: "700",
+    lineHeight: "1.75",
+    color: "#515fb0",
+  },
+  areaEntry: {
+    fontWeight: "400",
+    fontSize: "0.9rem",
+    lineHeight: "1.5",
+  },
+  contact: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
   }
 }));
 
+/*
+This is the profile component. It is a protected page, so it should only be able to be accessed by
+registered users who have completed their profile. If the user is successfully able to access it, it 
+gets their data from the firebase realtime database and loads it onto the page. Otherwise, it redirects
+them to either the login page or the complete-your-profile page. 
+*/
 export default function Profile() {
   const classes = useStyles();
   const { userData } = useAuth();
-
-  /* This is if we decide to use the EditProfile popup for redirection,
-  instead of a register page. We'd then use the incompleteProfile and pass it
-  as a prop to EditProfile, along with the onDismiss and isOpen props.
-
-  let location = useLocation();
-  let editPopupDefaultValue = false;
-  const incompleteProfile = location.state.incompleteProfile
-  if (incompleteProfile) {
-    editPopupDefaultValue = true;
-  }
-  const [showEditPopup, setShowEditPopup] = useState(editPopupDefaultValue);
-  */
-
   const [showEditPopup, setShowEditPopup] = useState(false);
   const openEditPopup = () => setShowEditPopup(true);
   const closeEditPopup = () => setShowEditPopup(false);
@@ -70,99 +78,115 @@ export default function Profile() {
   if (!userData.expertises) {
     userData.expertises = [];
   }
-
-
   return (
     <>
-      <EditProfilePopup isOpen={showEditPopup} onDismiss={closeEditPopup} /> 
-      <Grid container className={classes.grid} justify="center" spacing={5}>
-        
-          <Grid item container xs={3} justify="center" alignItems="center" className={classes.leftGrid}>
+      <EditProfilePopup isOpen={showEditPopup} onDismiss={closeEditPopup} />
+      <Grid
+        container
+        spacing={0}
+        direction="row"
+        alignItems="center"
+        justify="center"
+      >
+
+      
+        <Grid item xs={12} sm={8} lg={8} container className={classes.grid} justify="flex-start" spacing={5}>
+          <Grid item container xs={12} sm={5} lg={4} alignItems="center" justify="flex-start">
             <Grid item xs={12}>
-              <Avatar src={userData.personalInfo.profilePicture} className={ classes.profilePic } style={{ justifyContent: "center", display: "flex" }}/>
+              <Image src={userData.personalInfo.profilePicture || 'placeholder.jpg'} className={ classes.profilePic }/>
             </Grid>
-            <Grid item xs={5}>
-              AREAS OF INTEREST
+            <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+              <Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+                INTERESTS
+              </Typography>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6} sm={3} md={6} lg={7} xl={8}>
               <Divider className={classes.divider} />
             </Grid>
             <Grid item xs={12}>
             {
             userData.interests.map((interest) => (
-              <Typography gutterBottom align="right" variant="subtitle1">
+              <Typography align="right" variant="body1" component="h6" className={classes.areaEntry}>
                 {interest}
-                <br />
               </Typography>
             ))}
             <br />
             <br />
             </Grid>
-            <Grid item xs={5}>
-              AREAS OF EXPERTISE
+            <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+            <Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+              EXPERTISE
+            </Typography>
+              
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={6} sm={3} md={6} lg={7} xl={8}>
               <Divider className={classes.divider} />
             </Grid>
             <Grid item xs={12}>
             {
             userData.expertises.map((interest) => (
-              <Typography gutterBottom align="right" variant="subtitle1">
+              <Typography align="right" variant="body1" component="h6" className={classes.areaEntry}>
                 {interest}
-                <br />
               </Typography>
             ))}
             </Grid>
+              
+          </Grid>
+          <Grid item xs={12} sm={7} lg={8}>
+            <Typography align="left" variant="h4" component="h4">
+              {userData.personalInfo.name}
+              <IconButton onClick={openEditPopup}>
+                <EditIcon />
+              </IconButton>
+            </Typography>
+            
+            <Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+              {userData.personalInfo.work.position}
+            </Typography>
+              
+            <Typography align="left" variant="subtitle2" component="h4" className={classes.mainTitle}>
+              BIO
+            </Typography>
+            <Typography paragraph align="left">
+              {userData.personalInfo.bio || "Edit Profile to add your Bio!"}
+            </Typography>
+            <Typography align="left" variant="subtitle2" component="h4" className={classes.mainTitle}>
+              WORK EXPERIENCE
+            </Typography>
+            <Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+            {userData.personalInfo.work.company}, {userData.personalInfo.work.position}
+              {/* replace this later w/ info from database */}
+            </Typography>
+            <Typography paragraph align="left">
+            {userData.personalInfo.work.description}
+            </Typography>
+            <Typography align="left" variant="subtitle2" component="h4" className={classes.mainTitle}>
+              EDUCATION
+            </Typography>
+            <Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+              {userData.personalInfo.education.school}
+            </Typography>
+            <Typography align="left">
+              {userData.personalInfo.education.major} major
+            </Typography>
+            <Typography align="left">
+              Class of {userData.personalInfo.education.gradYear}
+            </Typography>
+            <Typography align="left" variant="subtitle2" component="h4" className={classes.mainTitle}>
+              CONTACT INFO
+            </Typography>
+            <Typography align="left" className={classes.contact}>
+            <EmailIcon />
+              : {userData.contactInfo.email} 
+            </Typography>
+
+            
+            <Typography paragraph align="left" className={classes.contact}>
+              <LinkedInIcon />
+              : <a href={userData.contactInfo.linkedin}> {userData.contactInfo.linkedin}</a>
+            </Typography>
             
           </Grid>
-    
-            
-          
-      
-        <Grid item xs={9} className={classes.rightGrid}>
-          <Typography align="left" variant="h4" component="h4">
-            {userData.personalInfo.name}
-            <IconButton onClick={openEditPopup}>
-              <EditIcon />
-            </IconButton>
-          </Typography>
-          
-          <Typography gutterBottom align="left" variant="h6" component="h6">
-            Position
-          </Typography>
-          <Typography paragraph align="left">
-            {userData.personalInfo.work}
-          </Typography>
-          <Typography align="left" variant="h6" component="h6">
-            Bio
-          </Typography>
-          <Typography paragraph align="left">
-            {userData.personalInfo.Bio || "Edit Profile to add your Bio!"}
-          </Typography>
-          <Typography align="left" variant="h6" component="h6">
-            Work Experience
-          </Typography>
-          <Typography paragraph align="left">
-            {userData.personalInfo.work}
-          </Typography>
-          <Typography align="left" variant="h6" component="h6">
-            Education
-          </Typography>
-          <Typography paragraph align="left">
-            {userData.personalInfo.education}
-          </Typography>
-          <Typography align="left" variant="h6" component="h6">
-            Contact Info
-          </Typography>
-          <Typography paragraph align="left">
-            Email: {userData.contactInfo.email}
-            
-          </Typography>
-          <Typography paragraph align="left">
-            LinkedIn: <a href={userData.contactInfo.linkedin}>{userData.contactInfo.linkedin}</a>
-
-          </Typography>
-          
         </Grid>
       </Grid>
     </>

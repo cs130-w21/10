@@ -9,12 +9,9 @@ import {
 import AuthProvider from './services/AuthContext';
 import ProtectedRoute from './helpers/ProtectedRoute';
 import Login from './components/Login';
-import Test from './components/Test/Test';
-import Home from './components/Test/Home';
 import Profile from './components/Profile';
 import MatchPage from './components/MatchPage/MatchPage';
 import ProfileCards from "./components/Swipe";
-import TestEditProfilePopup from './components/Profile/EditProfilePopup/TestEditProfilePopup';
 import CompleteYourProfile from './components/Profile/CompleteYourProfile';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -39,17 +36,8 @@ function App() {
             <ProtectedRoute path="/matches">
               <MatchPage/>
             </ProtectedRoute>
-            {/* <Route exact path="/test">
-              <Test />
-            </Route> */}
-            {/* <Route path='/home'>
-              <Home/>
-            </Route> */}
             <ProtectedRoute path='/complete-your-profile' profileProtection={false}>
               <CompleteYourProfile />
-            </ProtectedRoute>
-            <ProtectedRoute exact path="/test-edit-profile-popup">
-              <TestEditProfilePopup />
             </ProtectedRoute>
           </Switch>
         </AuthProvider>

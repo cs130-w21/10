@@ -1,9 +1,6 @@
 import React from 'react';
 
-// Documentation here: https://reach.tech/dialog/
-// import { Dialog } from '@reach/dialog';
-// import '@reach/dialog/styles.css';
-import { 
+import {
   Avatar,
   DialogActions,
   Dialog,
@@ -39,6 +36,25 @@ const useStyles = makeStyles((theme) => ({
   }
   }));
 
+/**
+ * @typedef {Object} SingleMatchUserProfile
+ * @prop {string} name            - The match user's name
+ * @prop {string} profilePicture  - URL to the match user's profile picture
+ * @prop {string} work            - The match user's work summary
+ * @prop {string} bio             - The match user's profile biography
+ * @prop {string} education       - The match user's education summary
+ * @prop {string} email           - The match user's email
+ * @prop {string} linkedin        - The match user's LinkedIn profile URL
+ */
+
+/**
+ * @class
+ * @classdesc Component to render a Popup for a user's single match object
+ * @extends React.Component
+ * @prop {boolean}                  isOpen        - A boolean to control whether the popup should be displayed or hidden.
+ * @prop {callback}                 onDismiss     - A callback that will be called when a user tries to exit the Dialog/Popup.
+ * @prop {SingleMatchUserProfile}   userProfile   - A JSON object that contains all the data needed to render that user's single match.
+ */
 const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
   const classes = useStyles();
   
@@ -67,7 +83,7 @@ const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
           </Typography>
           <br />
           <Typography gutterBottom align="left" variant="h6" component="h6">
-            Position
+            Work
           </Typography>
           <Typography paragraph align="left">
             {userProfile.work}
@@ -76,13 +92,7 @@ const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
             Bio
           </Typography>
           <Typography paragraph align="left">
-            {userProfile.Bio}
-          </Typography>
-          <Typography align="left" variant="h6" component="h6">
-            Work Experience
-          </Typography>
-          <Typography paragraph align="left">
-            {userProfile.work}
+            {userProfile.bio}
           </Typography>
           <Typography align="left" variant="h6" component="h6">
             Education

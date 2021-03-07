@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 function MatchPage() {
+	//set default state as loading matches
 	const classes = useStyles();
 	const [matches, setMatches] = useState("Loading...");
 	const {userData} = useAuth();
@@ -38,19 +39,31 @@ function MatchPage() {
 		{
 			const likes = [];
 			const likedBy = [];
+
+			//collect all of the profiles that the user has liked
 			for( let i in userData.likes ){
 				if(likes.includes(userData.likes[i]) == false)
 					likes.push(userData.likes[i]);
 			}
+
+			//collect all of the profiles that have liked all the users
 			for( let i in userData.likedBy)
 			{
 				if(likedBy.includes(userData.likedBy[i]) == false)
 					likedBy.push(userData.likedBy[i]);
 			}
+
+			//find all profiles that like the user and the user has liked back
 			const matches = likes.filter( value => likedBy.includes(value) );
+
+			//if there are 0 people that like the user and the user has liked back
+			//then there are no matches found
 			if(matches.length === 0)
 				setMatches("No matches found!")
 			else{
+				//here, there exists at least one person that likes the user and the user has liked back
+				//for each of the matches, push a match card with the other user's userid
+				//fit each matchcard into a grid format
 				let u = matches.map((id) => <Grid > <MatchCard key={id} user_id={id} className={classes.paper}/> </Grid>);
 				let k = [];
 				let temp = []
