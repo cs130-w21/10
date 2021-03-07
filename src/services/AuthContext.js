@@ -38,13 +38,13 @@ export default function AuthProvider(props) {
                     if (snapshot.exists()) {
                         setUserData(snapshot.val());
                     } else {
-                        setUserData(null)
+                        setUserData()
                     }
                 });
             } else {
                 setUid(null)
             }
-            setLoading(false) // Currently the testing is not happy with this.
+            setLoading(false)
         })
         return unsubscribe
     }, [])

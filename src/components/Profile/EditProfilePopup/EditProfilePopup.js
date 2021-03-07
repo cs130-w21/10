@@ -1,20 +1,48 @@
 import React, { useState, useEffect, useCallback } from 'react';
-
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import Chip from '@material-ui/core/Chip';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-
+import {
+  Avatar,
+  Button,
+  Chip,
+  Input,
+  DialogActions,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Box
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { useAuth } from '../../../services/AuthContext';
 import { db, storage, getCurrentUser } from '../../../services/firebase';
 
+const useStyles = makeStyles((theme) => ({
+  profilePic: {
+    width: theme.spacing(25),
+    height: theme.spacing(25),
+    overflow: "hidden",
+    marginBottom: theme.spacing(3),
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  textField: {
+    width: "100%"
+  },
+  dlog: {
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5)
+  }, 
+  leftB: {
+    float: "left"
+  },
+  rightB: {
+    float: "right"
+  }
+}));
+
 const EditProfilePopup = ({ isOpen, onDismiss }) => {
   const { userData, updateUserData } = useAuth();
+  const classes = useStyles();
 
   // State for list of interests
   // TODO: Could write new interests to DB when user inputs something new?
@@ -97,36 +125,71 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
     <Dialog
       open={isOpen}
       onClose={onDismiss}
+      fullWidth={true}
+      maxWidth="sm"
     >
       <DialogTitle>Edit Your Profile</DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.dlog}>
         <Avatar
           alt={`${personalInfo.name}'s Avatar`}
+          className={classes.profilePic}
           src={personalInfo.profilePicture ? personalInfo.profilePicture : '/placeholder.jpg'}
         />
-        <input type="file" onChange={(e) => setProfilePicFile(e.target.files[0])} />
-        <Button color="primary" onClick={handleImageUpload}>Upload Image</Button>
+
+        <Box >
+          <label htmlFor="upload-photo" style={{ marginLeft: '0px'}}>
+            <input 
+              type="file" 
+              id="upload-photo" 
+              style={{ display: 'none'}}
+              name="upload-photo"
+              onChange={(e) => setProfilePicFile(e.target.files[0])} />
+              <Button className={classes.leftB} color="primary" variant="contained" component="span">
+                Select Image
+              </Button>
+          </label>
+          <Button  className={classes.rightB} color="primary" style={{ marginRight: '0px'}} onClick={handleImageUpload}>
+            Upload Image
+          </Button>
+        </Box>
+        <br />
+        <br />
+        <br />
+
         <form onSubmit={handleSubmit}>
           <TextField
             label="Name"
             value={personalInfo.name}
+            className={classes.textField}
             onChange={handlePersonalInfoChange('name')}
           />
+          <br />
+          <br />
           <TextField
             label="Education"
+            className={classes.textField}
             value={personalInfo.education}
             onChange={handlePersonalInfoChange('education')}
           />
+          <br />
+          <br />
           <TextField
             label="Work"
+            className={classes.textField}
             value={personalInfo.work}
             onChange={handlePersonalInfoChange('work')}
           />
+          <br />
+          <br />
           <TextField
             label="LinkedIn"
+            className={classes.textField}
             value={contactInfo.linkedin}
             onChange={handleContactInfoChange('linkedin')}
           />
+          <br />
+          <br />
+          <br />
           <Autocomplete
             multiple
             options={interestsOptions}
@@ -141,10 +204,12 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
             renderInput={(params) => (
               <TextField
                 {...params} variant="outlined"
-                label="Interests" placeholder="Interests"
+                label="Interests" 
               />
             )}
           />
+          <br />
+          <br />
           <Autocomplete
             multiple
             options={interestsOptions}
@@ -159,10 +224,12 @@ const EditProfilePopup = ({ isOpen, onDismiss }) => {
             renderInput={(params) => (
               <TextField
                 {...params} variant="outlined"
-                label="Areas of Expertise" placeholder="Areas of Expertise"
+                label="Areas of Expertise" 
               />
             )}
           />
+          <br /> 
+          <br />
         </form>
       </DialogContent>
       <DialogActions>

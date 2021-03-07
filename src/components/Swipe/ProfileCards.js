@@ -48,6 +48,7 @@ function ProfileCards() {
           }
         }
 
+
         // get array of user keys that current user already swiped on
         let dontSwipeRef = snapshot.child("dontSwipe");
         if (dontSwipeRef.val() !== null || dontSwipeRef.val() !== undefined) {
@@ -55,12 +56,12 @@ function ProfileCards() {
             dontSwipe.add(dontSwipeRef.child(i).val());
           }
         }
-
         // if dontSwipe array reaches max size (10) reset array
         if (dontSwipe.size > 10) {
           db.ref("Users/" + uid + "/dontSwipe").remove();
           dontSwipe = new Set();
         }
+
 
         // get interests of user
         let interestsRef = snapshot.child("interests");
@@ -79,7 +80,7 @@ function ProfileCards() {
     usersRef.once("value").then((snapshot) => {
       snapshot.forEach((child) => {
         try {
-          // add to profile card deck if not current user uid or not in likes / dontSwipe array
+
           if (
             !(dontSwipe.has(child.key) || likes.has(child.key)) &&
             child.key != uid

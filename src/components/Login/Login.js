@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 import { useAuth } from '../../services/AuthContext';
 import { auth, createNewUser} from '../../services/firebase'
 import * as firebaseui from 'firebaseui';
@@ -37,7 +37,8 @@ const uiConfig = {
 				createNewUser(userOptions)
 				.then(() => {
 					// redirect after creating new user.
-					window.location.assign('/test')
+					// @jordan change this if necessary to whatever path you need
+					window.location.assign('/register')
 				}).catch((err) => {
 					console.log(err);
 					throw(err);
@@ -77,6 +78,10 @@ const startFirebaseUI = (elementId) => {
 
 export default function Login() {
 	const { uid, loading } = useAuth()
+	let location = useLocation();
+
+	let { from } = location.state || { from: { pathname : '/' } };
+
 	if (!loading) {
 		if (!uid) {
 			startFirebaseUI('#firebaseui-auth-container');
@@ -87,7 +92,7 @@ export default function Login() {
 				</div>
 			);
 		} else {
-			return (<Redirect to='/'/>)
+			return (<Redirect to={ from }/>)
 		}
 	} else {
 		return (<div>Loading</div>)
