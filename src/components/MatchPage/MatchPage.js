@@ -27,6 +27,18 @@ const useStyles = makeStyles((theme) => ({
 	}
   }));
 
+/**
+ * @typedef {Object} MatchPage
+ * @prop {string[]} matches            - A list of all the matches that the user has
+ * @prop {Object} userData            - A JSON object storing all of the user's information
+ */
+
+/**
+ * @class
+ * @classdesc Component to render all matches for a user
+ * @extends React.Component
+ */
+
 function MatchPage() {
 	//set default state as loading matches
 	const classes = useStyles();

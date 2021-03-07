@@ -56,8 +56,31 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
+/**
+ * @typedef {Object} MatchCard
+ * @prop {string} name            - The match user's name
+ * @prop {string} profilePicture  - URL to the match user's profile picture
+ * @prop {string} work            - The match user's work summary
+ * @prop {string} education            - The match user's education summary
+ */
+
+/**
+ * @class
+ * @classdesc Component to render a single match for a user
+ * @extends React.Component
+ * @prop {Object} props - JSON object that stores props sent from parent object
+ * @prop {string} props.user_id - String that holds the specified match's user id
+ */
+
 function MatchCard(props) {
+    /**
+      * @type {[Object, Function]} setInfo
+    */
     const [info, setInfo] = useState({name: "Loading..."});
+
+    /**
+      * @type {[Object, Function]} setShowPopup
+    */
     const [showPopup, setShowPopup] = useState(false);
     const openPopup = () => setShowPopup(true);
     const closePopup = () => setShowPopup(false);
