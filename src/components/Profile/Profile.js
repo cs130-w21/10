@@ -4,13 +4,10 @@ import Divider from '@material-ui/core/Divider';
 import Image from 'material-ui-image';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 import EmailIcon from '@material-ui/icons/Email';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import { useAuth } from '../../services/AuthContext';
 import EditProfilePopup from './EditProfilePopup';
 
@@ -58,23 +55,15 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+/*
+This is the profile component. It is a protected page, so it should only be able to be accessed by
+registered users who have completed their profile. If the user is successfully able to access it, it 
+gets their data from the firebase realtime database and loads it onto the page. Otherwise, it redirects
+them to either the login page or the complete-your-profile page. 
+*/
 export default function Profile() {
   const classes = useStyles();
   const { userData } = useAuth();
-
-  /* This is if we decide to use the EditProfile popup for redirection,
-  instead of a register page. We'd then use the incompleteProfile and pass it
-  as a prop to EditProfile, along with the onDismiss and isOpen props.
-
-  let location = useLocation();
-  let editPopupDefaultValue = false;
-  const incompleteProfile = location.state.incompleteProfile
-  if (incompleteProfile) {
-    editPopupDefaultValue = true;
-  }
-  const [showEditPopup, setShowEditPopup] = useState(editPopupDefaultValue);
-  */
-
   const [showEditPopup, setShowEditPopup] = useState(false);
   const openEditPopup = () => setShowEditPopup(true);
   const closeEditPopup = () => setShowEditPopup(false);
@@ -89,8 +78,6 @@ export default function Profile() {
   if (!userData.expertises) {
     userData.expertises = [];
   }
-  console.log(userData.personalInfo.profilePicture)
-
   return (
     <>
       <EditProfilePopup isOpen={showEditPopup} onDismiss={closeEditPopup} />
@@ -105,8 +92,8 @@ export default function Profile() {
       
         <Grid item xs={12} sm={8} lg={8} container className={classes.grid} justify="flex-start" spacing={5}>
           <Grid item container xs={12} sm={5} lg={4} alignItems="center" justify="flex-start">
-            <Grid item xs={12} justify="center">
-              <Image src={userData.personalInfo.profilePicture || 'placeholder.jpg'} cover={true} className={ classes.profilePic }/>
+            <Grid item xs={12}>
+              <Image src={userData.personalInfo.profilePicture || 'placeholder.jpg'} className={ classes.profilePic }/>
             </Grid>
             <Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
               <Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
