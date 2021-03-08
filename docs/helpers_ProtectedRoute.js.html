@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: helpers/ProtectedRoute.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: helpers/ProtectedRoute.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import {useAuth} from '../services/AuthContext';
+import {Route, Redirect} from 'react-router-dom';
+
+const incompleteProfile = (userData) => {
+    if (!userData) return true;
+    if (!userData.personalInfo || !userData.personalInfo.name || userData.personalInfo.name === '') return true; 
+    if (!userData.interests || userData.interests.length &lt; 1) return true;
+    if (!userData.expertises || userData.expertises.length &lt; 1) return true;
+    return false;
+}
+
+/**
+ * @class
+ * @classdesc Routing proxy for access protection based on login and completed profile
+ * @extends React.Component
+ * @summary Checks if user is logged in, if not redirects to login page. 
+ * If user is logged in and is trying to access a page that requires a completed profile,
+ * checks if they have a completed profile; if not, redirects to complete-your-profile page, 
+ * otherwise directs to desired page.
+ * If user is logged in and does not need complete profile to access page, directs user to desired page.
+ * @prop {tree} children    the protected components to be loaded if access is allowed
+ * @prop {boolean} [profileProtection=true]     determines if page requires a completed profile
+ */
+const ProtectedRoute = ({children, profileProtection = true, ...rest}) => {
+    const {uid, userData, loading} = useAuth();
+    if (!loading) {
+        return (
+            &lt;Route 
+                {...rest} 
+                render={({location}) => {
+                    if (!uid) {
+                        return (
+                            &lt;Redirect
+                                to={{
+                                    pathname: '/login',
+                                    state: {from: location}
+                                }}
+                            />
+                        );
+                    }
+                    /*
+                      This is for the redirection if they have an incompleteProfile.
+                      All we have to do is change the redirection URL to whichever
+                      register page we want to have.
+                    */
+                    else if (profileProtection &amp;&amp; incompleteProfile(userData)) {
+                        // If we want the page to require them to be logged in,
+                        // AND have a complete profile, then profileProtection will be true.
+                        // This is true for most pages, which is why it is defaulted to true.
+                        // However it will not be true for whichever 'complete your profile'
+                        // page we decide to implement.
+                        return (
+                            &lt;Redirect 
+                                to={{
+                                    pathname: '/complete-your-profile',
+                                    state: {
+                                      incompleteProfile: true,
+                                      from: location,
+                                    }
+                                }} 
+                            />
+                        );
+                    }
+                    return children;
+                }}
+            />
+        )
+    }
+    else {
+        return &lt;div>Loading&lt;/div>
+    }
+}
+
+export default ProtectedRoute;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-useEditProfileForm.html">useEditProfileForm</a></li></ul><h3>Classes</h3><ul><li><a href="AuthProvider.html">AuthProvider</a></li><li><a href="CompleteYourProfile.html">CompleteYourProfile</a></li><li><a href="EditProfileForm.html">EditProfileForm</a></li><li><a href="EditProfilePopup.html">EditProfilePopup</a></li><li><a href="Login.html">Login</a></li><li><a href="MatchCard.html">MatchCard</a></li><li><a href="MatchPage.html">MatchPage</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Profile.html">Profile</a></li><li><a href="ProfileCards.html">ProfileCards</a></li><li><a href="ProtectedRoute.html">ProtectedRoute</a></li><li><a href="SingleMatchPopup.html">SingleMatchPopup</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Mar 08 2021 00:40:32 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

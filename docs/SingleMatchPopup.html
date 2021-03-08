@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: SingleMatchPopup</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: SingleMatchPopup</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2><span class="attribs"><span class="type-signature"></span></span>SingleMatchPopup<span class="signature">(isOpen, onDismiss, userProfile)</span><span class="type-signature"></span></h2>
+        
+            <div class="class-description"><p>Component to render a Popup for a user's single match object</p></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="SingleMatchPopup"><span class="type-signature"></span>new SingleMatchPopup<span class="signature">(isOpen, onDismiss, userProfile)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>isOpen</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A boolean to control whether the popup should be displayed or hidden.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onDismiss</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">callback</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A callback that will be called when a user tries to exit the Dialog/Popup.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>userProfile</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SingleMatchUserProfile">SingleMatchUserProfile</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>A JSON object that contains all the data needed to render that user's single match.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_MatchPage_SingleMatchPopup_SingleMatchPopup.js.html">components/MatchPage/SingleMatchPopup/SingleMatchPopup.js</a>, <a href="components_MatchPage_SingleMatchPopup_SingleMatchPopup.js.html#line69">line 69</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// In this example, popup stays open and has no way to be closed
+test_profile = { name: 'hello', work: 'Unemployed' ...}
+&lt;SingleMatchPopup isOpen={true} userProfile={test_profile} /></code></pre>
+
+    <pre class="prettyprint"><code>// A typical use case
+test_profile = { name: 'hello', work: 'Unemployed' ...}
+const [open, setOpen] = useState(false);
+&lt;SingleMatchPopup isOpen={open} onDismiss={() => setOpen(!open)} userProfile={test_profile} /></code></pre>
+
+
+
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li>React.Component</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-useEditProfileForm.html">useEditProfileForm</a></li></ul><h3>Classes</h3><ul><li><a href="AuthProvider.html">AuthProvider</a></li><li><a href="CompleteYourProfile.html">CompleteYourProfile</a></li><li><a href="EditProfileForm.html">EditProfileForm</a></li><li><a href="EditProfilePopup.html">EditProfilePopup</a></li><li><a href="Login.html">Login</a></li><li><a href="MatchCard.html">MatchCard</a></li><li><a href="MatchPage.html">MatchPage</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Profile.html">Profile</a></li><li><a href="ProfileCards.html">ProfileCards</a></li><li><a href="ProtectedRoute.html">ProtectedRoute</a></li><li><a href="SingleMatchPopup.html">SingleMatchPopup</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Mar 08 2021 00:40:32 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

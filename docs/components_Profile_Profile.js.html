@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/Profile/Profile.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/Profile/Profile.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+import Image from 'material-ui-image';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import EmailIcon from '@material-ui/icons/Email';
+import { useAuth } from '../../services/AuthContext';
+import EditProfilePopup from './EditProfilePopup';
+
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    padding: theme.spacing(5),
+    paddingRight: theme.spacing(5),
+    minWidth: theme.spacing(150),
+
+  },
+  profilePic: {
+    width: theme.spacing(25),
+    height: theme.spacing(25),
+    marginBottom: theme.spacing(5),
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  interestedArea: {
+    textAlign: "left",
+  },
+  divider: {
+    backgroundColor: "black",
+  },
+  areaTitle: {
+    fontSize: "1rem",
+    fontWeight: "500",
+    lineHeight: "1.75",
+    color: "#808080",
+  },
+  mainTitle: {
+    fontSize: "1.4rem",
+    fontWeight: "700",
+    lineHeight: "1.75",
+    color: "#515fb0",
+  },
+  areaEntry: {
+    fontWeight: "400",
+    fontSize: "0.9rem",
+    lineHeight: "1.5",
+  },
+  contact: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  }
+}));
+
+/**
+ * @class
+ * @classdesc Component to render the Profile page of any logged in user
+ * @extends React.Component
+ */
+const Profile = () => {
+  const classes = useStyles();
+  /**
+   * @member userData
+   * @instance
+   * @memberof Profile
+   * @type {UserData}
+   * @description JSON object that contains all the user's info, retrieved from Firebase
+   */
+  const { userData } = useAuth();
+  /**
+   * @member showEditPopup
+   * @instance
+   * @memberof Profile
+   * @type {boolean}
+   * @description The state that determines whether the {@link EditProfilePopup} is shown or not
+   */
+  /**
+   * @function setShowEditPopup
+   * @instance
+   * @memberof Profile
+   * @param {boolean} val
+   * @description A function callback that sets the showEditPopup boolean in the internal state of Profile.
+   */
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  /**
+   * @memberof Profile
+   * @function openEditPopup
+   * @description Called to open the {@link EditProfilePopup} and allow user to edit their details.
+   * @instance
+   */
+  const openEditPopup = () => setShowEditPopup(true);
+    /**
+   * @memberof Profile
+   * @function openEditPopup
+   * @description Called to close the {@link EditProfilePopup}.
+   * @instance
+   */
+  const closeEditPopup = () => setShowEditPopup(false);
+
+  if (!userData) {
+    return &lt;div> Loading &lt;/div>
+  }
+  // just make sure these aren't null
+  if (!userData.interests) {
+    userData.interests = [];
+  }
+  if (!userData.expertises) {
+    userData.expertises = [];
+  }
+  return (
+    &lt;>
+      &lt;EditProfilePopup isOpen={showEditPopup} onDismiss={closeEditPopup} />
+      &lt;Grid
+        container
+        spacing={0}
+        direction="row"
+        alignItems="center"
+        justify="center"
+      >
+
+      
+        &lt;Grid item xs={12} sm={8} lg={8} container className={classes.grid} justify="flex-start" spacing={5}>
+          &lt;Grid item container xs={12} sm={5} lg={4} alignItems="center" justify="flex-start">
+            &lt;Grid item xs={12}>
+              &lt;Image src={userData.personalInfo.profilePicture || 'placeholder.jpg'} className={ classes.profilePic }/>
+            &lt;/Grid>
+            &lt;Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+              &lt;Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+                INTERESTS
+              &lt;/Typography>
+            &lt;/Grid>
+            &lt;Grid item xs={6} sm={3} md={6} lg={7} xl={8}>
+              &lt;Divider className={classes.divider} />
+            &lt;/Grid>
+            &lt;Grid item xs={12}>
+            {
+            userData.interests.map((interest) => (
+              &lt;Typography align="right" variant="body1" component="h6" className={classes.areaEntry}>
+                {interest}
+              &lt;/Typography>
+            ))}
+            &lt;br />
+            &lt;br />
+            &lt;/Grid>
+            &lt;Grid item xs={12} sm={9} md={6} lg={5} xl={4}>
+            &lt;Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+              EXPERTISE
+            &lt;/Typography>
+              
+            &lt;/Grid>
+            &lt;Grid item xs={6} sm={3} md={6} lg={7} xl={8}>
+              &lt;Divider className={classes.divider} />
+            &lt;/Grid>
+            &lt;Grid item xs={12}>
+            {
+            userData.expertises.map((interest) => (
+              &lt;Typography align="right" variant="body1" component="h6" className={classes.areaEntry}>
+                {interest}
+              &lt;/Typography>
+            ))}
+            &lt;/Grid>
+              
+          &lt;/Grid>
+          &lt;Grid item xs={12} sm={7} lg={8}>
+            &lt;Typography align="left" variant="h4" component="h4">
+              {userData.personalInfo.name}
+              &lt;IconButton onClick={openEditPopup}>
+                &lt;EditIcon />
+              &lt;/IconButton>
+            &lt;/Typography>
+            
+            &lt;Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+              {userData.personalInfo.work.position}
+            &lt;/Typography>
+              
+            &lt;Typography align="left" variant="subtitle2" component="h4" className={classes.mainTitle}>
+              BIO
+            &lt;/Typography>
+            &lt;Typography paragraph align="left">
+              {userData.personalInfo.bio || "Edit Profile to add your Bio!"}
+            &lt;/Typography>
+            &lt;Typography align="left" variant="subtitle2" component="h4" className={classes.mainTitle}>
+              WORK EXPERIENCE
+            &lt;/Typography>
+            &lt;Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+            {userData.personalInfo.work.company}, {userData.personalInfo.work.position}
+              {/* replace this later w/ info from database */}
+            &lt;/Typography>
+            &lt;Typography paragraph align="left">
+            {userData.personalInfo.work.description}
+            &lt;/Typography>
+            &lt;Typography align="left" variant="subtitle2" component="h4" className={classes.mainTitle}>
+              EDUCATION
+            &lt;/Typography>
+            &lt;Typography align="left" variant="subtitle2" component="h4" className={classes.areaTitle}>
+              {userData.personalInfo.education.school}
+            &lt;/Typography>
+            &lt;Typography align="left">
+              {userData.personalInfo.education.major} major
+            &lt;/Typography>
+            &lt;Typography align="left">
+              Class of {userData.personalInfo.education.gradYear}
+            &lt;/Typography>
+            &lt;Typography align="left" variant="subtitle2" component="h4" className={classes.mainTitle}>
+              CONTACT INFO
+            &lt;/Typography>
+            &lt;Typography align="left" className={classes.contact}>
+            &lt;EmailIcon />
+              : {userData.contactInfo.email} 
+            &lt;/Typography>
+
+            
+            &lt;Typography paragraph align="left" className={classes.contact}>
+              &lt;LinkedInIcon />
+              : &lt;a href={userData.contactInfo.linkedin}> {userData.contactInfo.linkedin}&lt;/a>
+            &lt;/Typography>
+            
+          &lt;/Grid>
+        &lt;/Grid>
+      &lt;/Grid>
+    &lt;/>
+  );
+  
+}
+
+export default Profile;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-useEditProfileForm.html">useEditProfileForm</a></li></ul><h3>Classes</h3><ul><li><a href="AuthProvider.html">AuthProvider</a></li><li><a href="CompleteYourProfile.html">CompleteYourProfile</a></li><li><a href="EditProfileForm.html">EditProfileForm</a></li><li><a href="EditProfilePopup.html">EditProfilePopup</a></li><li><a href="Login.html">Login</a></li><li><a href="MatchCard.html">MatchCard</a></li><li><a href="MatchPage.html">MatchPage</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Profile.html">Profile</a></li><li><a href="ProfileCards.html">ProfileCards</a></li><li><a href="ProtectedRoute.html">ProtectedRoute</a></li><li><a href="SingleMatchPopup.html">SingleMatchPopup</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Mar 08 2021 00:40:32 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -11,7 +11,7 @@
 /coverage
 
 # generated documentation
-/docs
+# /docs
 
 # production
 /build

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/MatchPage/SingleMatchPopup/SingleMatchPopup.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/MatchPage/SingleMatchPopup/SingleMatchPopup.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+
+import {
+  Avatar,
+  DialogActions,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  Typography, 
+  Divider
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  profilePic: {
+    width: theme.spacing(25),
+    height: theme.spacing(25),
+    overflow: "hidden",
+    marginBottom: theme.spacing(3),
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  leftG: {
+    width: theme.spacing(25)
+  },
+  rightG: {
+    width: theme.spacing(60),
+    marginLeft: theme.spacing(3)
+  },
+  divider: {
+    backgroundColor: "black"
+  },
+  grid: {
+    minWidth: theme.spacing(85)
+  }
+  }));
+
+/**
+ * @typedef {Object} SingleMatchUserProfile
+ * @prop {string} name            - The match user's name
+ * @prop {string} profilePicture  - URL to the match user's profile picture
+ * @prop {string} work            - The match user's work summary
+ * @prop {string} bio             - The match user's profile biography
+ * @prop {string} education       - The match user's education summary
+ * @prop {string} email           - The match user's email
+ * @prop {string} linkedin        - The match user's LinkedIn profile URL
+ */
+
+/**
+ * @class
+ * @classdesc Component to render a Popup for a user's single match object
+ * @extends React.Component
+ * @param {boolean}                  isOpen        - A boolean to control whether the popup should be displayed or hidden.
+ * @param {callback}                 onDismiss     - A callback that will be called when a user tries to exit the Dialog/Popup.
+ * @param {SingleMatchUserProfile}   userProfile   - A JSON object that contains all the data needed to render that user's single match.
+ * 
+ * @example
+ * // In this example, popup stays open and has no way to be closed
+ * test_profile = { name: 'hello', work: 'Unemployed' ...}
+ * &lt;SingleMatchPopup isOpen={true} userProfile={test_profile} />
+ *
+ * @example
+ * // A typical use case
+ * test_profile = { name: 'hello', work: 'Unemployed' ...}
+ * const [open, setOpen] = useState(false);
+ * &lt;SingleMatchPopup isOpen={open} onDismiss={() => setOpen(!open)} userProfile={test_profile} />
+ */
+const SingleMatchPopup = ({ isOpen, onDismiss, userProfile }) => {
+  const classes = useStyles();
+  
+  return (
+    &lt;Dialog
+      open={isOpen}
+      onClose={onDismiss}
+      fullWidth={true}
+      maxWidth='md'
+      minWidth='md'
+    >
+      &lt;DialogContent>
+
+        &lt;Grid container spacing={2} className={classes.grid}> 
+          &lt;Grid item container className={classes.leftG}>
+            &lt;Grid item>
+              &lt;Avatar 
+                className={classes.profilePic}
+                src={userProfile.profilePicture}
+              />
+            &lt;/Grid>
+          &lt;/Grid>
+          &lt;Grid item className={classes.rightG}>
+          &lt;Typography align="left" variant="h4" component="h4">
+            {userProfile.name}
+          &lt;/Typography>
+          &lt;br />
+          &lt;Typography gutterBottom align="left" variant="h6" component="h6">
+            Work
+          &lt;/Typography>
+          &lt;Typography paragraph align="left">
+            {userProfile.work}
+          &lt;/Typography>
+          &lt;Typography align="left" variant="h6" component="h6">
+            Bio
+          &lt;/Typography>
+          &lt;Typography paragraph align="left">
+            {userProfile.bio}
+          &lt;/Typography>
+          &lt;Typography align="left" variant="h6" component="h6">
+            Education
+          &lt;/Typography>
+          &lt;Typography paragraph align="left">
+            {userProfile.education}
+          &lt;/Typography>
+          &lt;Typography align="left" variant="h6" component="h6">
+            Contact Info
+          &lt;/Typography>
+          &lt;Typography paragraph align="left">
+            Email: {userProfile.email}
+          &lt;/Typography>
+          &lt;Typography paragraph align="left">
+            LinkedIn: &lt;a href={userProfile.linkedin}>{userProfile.linkedin}&lt;/a>
+          &lt;/Typography>
+
+          &lt;/Grid>  
+        &lt;/Grid>
+      &lt;/DialogContent>
+    &lt;/Dialog>
+  );
+};
+
+export default SingleMatchPopup;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-useEditProfileForm.html">useEditProfileForm</a></li></ul><h3>Classes</h3><ul><li><a href="AuthProvider.html">AuthProvider</a></li><li><a href="CompleteYourProfile.html">CompleteYourProfile</a></li><li><a href="EditProfileForm.html">EditProfileForm</a></li><li><a href="EditProfilePopup.html">EditProfilePopup</a></li><li><a href="Login.html">Login</a></li><li><a href="MatchCard.html">MatchCard</a></li><li><a href="MatchPage.html">MatchPage</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="Profile.html">Profile</a></li><li><a href="ProfileCards.html">ProfileCards</a></li><li><a href="ProtectedRoute.html">ProtectedRoute</a></li><li><a href="SingleMatchPopup.html">SingleMatchPopup</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Mon Mar 08 2021 00:40:32 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
