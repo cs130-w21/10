@@ -4,7 +4,7 @@ const useAuthMock =  () => {
       email: 'test@test.com',
       linkedin: 'https://test.com'
     },
-    expertises: ["Business"],
+    expertises: ["Agriculture"],
     interests: ["Business"],
     personalInfo: {
       bio: "testBio",
