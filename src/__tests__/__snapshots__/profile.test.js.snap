@@ -1,0 +1,284 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test profile page snapshot test for profile page 1`] = `
+<div
+  className="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+>
+  <div
+    className="MuiGrid-root makeStyles-grid-9 MuiGrid-container MuiGrid-spacing-xs-5 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-8 MuiGrid-grid-lg-8"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-12 MuiGrid-grid-sm-5 MuiGrid-grid-lg-4"
+    >
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <div
+          style={
+            Object {
+              "backgroundColor": "#fff",
+              "paddingTop": "calc(1 / 1 * 100%)",
+              "position": "relative",
+            }
+          }
+        >
+          <img
+            className="makeStyles-profilePic-10"
+            onError={[Function]}
+            onLoad={[Function]}
+            src="/placeholder.jpg"
+            style={
+              Object {
+                "filterBrightness": 0,
+                "filterSaturate": 20,
+                "height": "100%",
+                "left": 0,
+                "objectFit": "inherit",
+                "opacity": 0,
+                "position": "absolute",
+                "top": 0,
+                "transition": "
+        filterBrightness 2250ms cubic-bezier(0.4, 0.0, 0.2, 1),
+        filterSaturate 3000ms cubic-bezier(0.4, 0.0, 0.2, 1),
+        opacity 1500ms cubic-bezier(0.4, 0.0, 0.2, 1)",
+                "width": "100%",
+              }
+            }
+          />
+          <div
+            style={
+              Object {
+                "alignItems": "center",
+                "display": "flex",
+                "height": "100%",
+                "justifyContent": "center",
+                "left": 0,
+                "pointerEvents": "none",
+                "position": "absolute",
+                "top": 0,
+                "width": "100%",
+              }
+            }
+          >
+            <div
+              className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+              role="progressbar"
+              style={
+                Object {
+                  "height": 48,
+                  "width": 48,
+                }
+              }
+            >
+              <svg
+                className="MuiCircularProgress-svg"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+                  cx={44}
+                  cy={44}
+                  fill="none"
+                  r={20.2}
+                  strokeWidth={3.6}
+                  style={Object {}}
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-9 MuiGrid-grid-md-6 MuiGrid-grid-lg-5 MuiGrid-grid-xl-4"
+      >
+        <h4
+          className="MuiTypography-root makeStyles-areaTitle-13 MuiTypography-subtitle2 MuiTypography-alignLeft"
+        >
+          INTERESTS
+        </h4>
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-3 MuiGrid-grid-md-6 MuiGrid-grid-lg-7 MuiGrid-grid-xl-8"
+      >
+        <hr
+          className="MuiDivider-root makeStyles-divider-12"
+        />
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <h6
+          className="MuiTypography-root makeStyles-areaEntry-15 MuiTypography-body1 MuiTypography-alignRight"
+        >
+          Business
+        </h6>
+        <br />
+        <br />
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-9 MuiGrid-grid-md-6 MuiGrid-grid-lg-5 MuiGrid-grid-xl-4"
+      >
+        <h4
+          className="MuiTypography-root makeStyles-areaTitle-13 MuiTypography-subtitle2 MuiTypography-alignLeft"
+        >
+          EXPERTISE
+        </h4>
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6 MuiGrid-grid-sm-3 MuiGrid-grid-md-6 MuiGrid-grid-lg-7 MuiGrid-grid-xl-8"
+      >
+        <hr
+          className="MuiDivider-root makeStyles-divider-12"
+        />
+      </div>
+      <div
+        className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      >
+        <h6
+          className="MuiTypography-root makeStyles-areaEntry-15 MuiTypography-body1 MuiTypography-alignRight"
+        >
+          Agriculture
+        </h6>
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-7 MuiGrid-grid-lg-8"
+    >
+      <h4
+        className="MuiTypography-root MuiTypography-h4 MuiTypography-alignLeft"
+      >
+        test user
+        <button
+          className="MuiButtonBase-root MuiIconButton-root"
+          disabled={false}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onDragLeave={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseDown={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
+          onTouchEnd={[Function]}
+          onTouchMove={[Function]}
+          onTouchStart={[Function]}
+          tabIndex={0}
+          type="button"
+        >
+          <span
+            className="MuiIconButton-label"
+          >
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+              />
+            </svg>
+          </span>
+        </button>
+      </h4>
+      <h4
+        className="MuiTypography-root makeStyles-areaTitle-13 MuiTypography-subtitle2 MuiTypography-alignLeft"
+      >
+        testPosition
+      </h4>
+      <h4
+        className="MuiTypography-root makeStyles-mainTitle-14 MuiTypography-subtitle2 MuiTypography-alignLeft"
+      >
+        BIO
+      </h4>
+      <p
+        className="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph MuiTypography-alignLeft"
+      >
+        testBio
+      </p>
+      <h4
+        className="MuiTypography-root makeStyles-mainTitle-14 MuiTypography-subtitle2 MuiTypography-alignLeft"
+      >
+        WORK EXPERIENCE
+      </h4>
+      <h4
+        className="MuiTypography-root makeStyles-areaTitle-13 MuiTypography-subtitle2 MuiTypography-alignLeft"
+      >
+        testCompany
+        , 
+        testPosition
+      </h4>
+      <p
+        className="MuiTypography-root MuiTypography-body1 MuiTypography-paragraph MuiTypography-alignLeft"
+      >
+        testDescription
+      </p>
+      <h4
+        className="MuiTypography-root makeStyles-mainTitle-14 MuiTypography-subtitle2 MuiTypography-alignLeft"
+      >
+        EDUCATION
+      </h4>
+      <h4
+        className="MuiTypography-root makeStyles-areaTitle-13 MuiTypography-subtitle2 MuiTypography-alignLeft"
+      >
+        UCLA
+      </h4>
+      <p
+        className="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+      >
+        CS
+         major
+      </p>
+      <p
+        className="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+      >
+        Class of 
+        2021
+      </p>
+      <h4
+        className="MuiTypography-root makeStyles-mainTitle-14 MuiTypography-subtitle2 MuiTypography-alignLeft"
+      >
+        CONTACT INFO
+      </h4>
+      <p
+        className="MuiTypography-root makeStyles-contact-16 MuiTypography-body1 MuiTypography-alignLeft"
+      >
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+          />
+        </svg>
+        : 
+        test@test.com
+      </p>
+      <p
+        className="MuiTypography-root makeStyles-contact-16 MuiTypography-body1 MuiTypography-paragraph MuiTypography-alignLeft"
+      >
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"
+          />
+        </svg>
+        : 
+        <a
+          href="https://test.com"
+        >
+           
+          https://test.com
+        </a>
+      </p>
+    </div>
+  </div>
+</div>
+`;

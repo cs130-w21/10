@@ -138,7 +138,7 @@ const Profile = () => {
             <Grid item xs={12}>
             {
             userData.interests.map((interest) => (
-              <Typography align="right" variant="body1" component="h6" className={classes.areaEntry}>
+              <Typography key={interest} align="right" variant="body1" component="h6" className={classes.areaEntry}>
                 {interest}
               </Typography>
             ))}
@@ -157,7 +157,7 @@ const Profile = () => {
             <Grid item xs={12}>
             {
             userData.expertises.map((interest) => (
-              <Typography align="right" variant="body1" component="h6" className={classes.areaEntry}>
+              <Typography key={interest} align="right" variant="body1" component="h6" className={classes.areaEntry}>
                 {interest}
               </Typography>
             ))}

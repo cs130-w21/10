@@ -4,7 +4,7 @@ const useAuthMock =  () => {
       email: 'test@test.com',
       linkedin: 'https://test.com'
     },
-    expertises: ["Business"],
+    expertises: ["Agriculture"],
     interests: ["Business"],
     personalInfo: {
       bio: "testBio",
@@ -31,9 +31,9 @@ const useAuthMock =  () => {
   const loading = false;
   let uid = '123456789';
 
-  const logout = jest.fn(() => {
+  async function logout() {
     uid = null;
-  });
+  };
   const updateUserData = (field, newInfo) => {
     userData[field] = newInfo;
   };

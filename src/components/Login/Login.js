@@ -96,7 +96,7 @@ const Login = () => {
 			startFirebaseUI('#firebaseui-auth-container');
 			return (
 				<div>
-					<h1>Capitalist Hinge</h1>
+					<h1>Login</h1>
 					<div id="firebaseui-auth-container"></div>
 				</div>
 			);
