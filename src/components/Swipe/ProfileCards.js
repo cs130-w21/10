@@ -48,7 +48,6 @@ function ProfileCards() {
           }
         }
 
-
         // get array of user keys that current user already swiped on
         let dontSwipeRef = snapshot.child("dontSwipe");
         if (dontSwipeRef.val() !== null || dontSwipeRef.val() !== undefined) {
@@ -61,7 +60,6 @@ function ProfileCards() {
           db.ref("Users/" + uid + "/dontSwipe").remove();
           dontSwipe = new Set();
         }
-
 
         // get interests of user
         let interestsRef = snapshot.child("interests");
@@ -80,7 +78,6 @@ function ProfileCards() {
     usersRef.once("value").then((snapshot) => {
       snapshot.forEach((child) => {
         try {
-
           if (
             !(dontSwipe.has(child.key) || likes.has(child.key)) &&
             child.key != uid
@@ -182,8 +179,8 @@ function ProfileCards() {
   };
 
   return (
-    <div>
-      <div className="profileCards__cardContainer">
+    <div role="cards">
+      <div role="cardContainer" className="profileCards__cardContainer">
         {people.map((person) => (
           <TinderCard
             className="swipe"
