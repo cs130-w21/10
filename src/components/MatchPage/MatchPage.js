@@ -131,7 +131,7 @@ function MatchPage() {
 		</Typography>
 		</Box>
 		<br /> <br />
-		<div className="MatchPage" display="flex">
+		<div role="MatchPage" className="MatchPage" display="flex">
 			<Grid 
 				container
 				item

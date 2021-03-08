@@ -20,5 +20,6 @@ describe('test match card', () => {
       expect(title[0]).toBeInTheDocument();
       const matches = screen.getAllByText(/No matches found/);
       expect(matches[0]).toBeInTheDocument();
+      expect(screen.getByRole("MatchPage")).toBeInTheDocument();
     });
   });
