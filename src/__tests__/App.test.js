@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import renderer from 'react-test-renderer';
 import App from '../App';
 
 test('renders capitalist hinge app', () => {
@@ -9,7 +8,3 @@ test('renders capitalist hinge app', () => {
   const login = screen.getByText(/Login/i);
   expect(login).toBeInTheDocument();
 });
-test('snapshot test for app home page', () => {
-  const tree = renderer.create(<App />).toJSON();
-  expect(tree).toMatchSnapshot();
-})
