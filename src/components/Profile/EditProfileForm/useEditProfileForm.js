@@ -34,6 +34,7 @@ import { db, storage, getCurrentUser } from '../../../services/firebase';
 
 /**
  * @typedef {Object} UserData
+ * @description A JSON object that contains all the user's info, retrieved from Firebase DB.
  * @prop {UserPersonalInfo} personalInfo  - A user's personal information
  * @prop {UserContactInfo} contactInfo    - A user's contact information
  * @prop {array} interests                - An array of a user's interests. Each entry is a `string`.

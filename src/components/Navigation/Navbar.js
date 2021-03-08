@@ -51,11 +51,6 @@ const navLinks = [
   { title: `Matches`, path: `/matches` },
   { title: `Profile`, path: `/profile` },
 ];
-/**
- * @typedef {Object} Navbar
- * @prop {String} uid          - The unique id of the currently logged in user 
- * @prop {String} signInOrOut  - The label for the sign in/out button
- */
 
 /**
  * @class
@@ -64,7 +59,21 @@ const navLinks = [
  */
 const Navbar = () => {
   const classes = useStyles();
+  /**
+   * @member uid
+   * @instance
+   * @memberof Navbar
+   * @type {string}
+   * @description The unique id of the currently logged in user. Null if no user is logged in.
+   */
   const { logout, uid } = useAuth();
+  /**
+   * @member signInOrOut
+   * @instance
+   * @memberof Navbar
+   * @type {string}
+   * @description Label for the sign in/out button
+   */
   let signInOrOut = uid ? `Sign Out` : `Sign In`;
  
   /**

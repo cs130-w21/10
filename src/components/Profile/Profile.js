@@ -56,34 +56,46 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 /**
- * @global
- * @typedef {Object} Profile
- * @prop {bool} showEditPopup        - The state that determines whether the EditProfilePopup is shown or not
- * @prop {callback} setShowEditPopup - A function callback that sets the showEditPopup boolean in the internal state of Profile
- * @prop {Object} userData           - A JSON object that contains all the user's info, retrieved from firebase
- */
-
-/**
  * @class
  * @classdesc Component to render the Profile page of any logged in user
  * @extends React.Component
  */
-
 const Profile = () => {
   const classes = useStyles();
+  /**
+   * @member userData
+   * @instance
+   * @memberof Profile
+   * @type {UserData}
+   * @description JSON object that contains all the user's info, retrieved from Firebase
+   */
   const { userData } = useAuth();
+  /**
+   * @member showEditPopup
+   * @instance
+   * @memberof Profile
+   * @type {boolean}
+   * @description The state that determines whether the {@link EditProfilePopup} is shown or not
+   */
+  /**
+   * @function setShowEditPopup
+   * @instance
+   * @memberof Profile
+   * @param {boolean} val
+   * @description A function callback that sets the showEditPopup boolean in the internal state of Profile.
+   */
   const [showEditPopup, setShowEditPopup] = useState(false);
   /**
    * @memberof Profile
    * @function openEditPopup
-   * @description Called to open the edit profile popup and allow user to edit it
+   * @description Called to open the {@link EditProfilePopup} and allow user to edit their details.
    * @instance
    */
   const openEditPopup = () => setShowEditPopup(true);
     /**
    * @memberof Profile
    * @function openEditPopup
-   * @description Called to close the edit profile popup
+   * @description Called to close the {@link EditProfilePopup}.
    * @instance
    */
   const closeEditPopup = () => setShowEditPopup(false);
