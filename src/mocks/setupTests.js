@@ -21,6 +21,12 @@ const useAuthMock =  () => {
         position: 'testPosition',
       },
     },
+    likedBy: {
+      1: 1
+    },
+    likes: {
+      2: 2
+    }
   };
   const loading = false;
   let uid = '123456789';
