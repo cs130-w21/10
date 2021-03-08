@@ -9,7 +9,7 @@ test('renders capitalist hinge app', () => {
   const login = screen.getByText(/Login/i);
   expect(login).toBeInTheDocument();
 });
-test('snapshot test for profile page', () => {
+test('snapshot test for app home page', () => {
   const tree = renderer.create(<App />).toJSON();
   expect(tree).toMatchSnapshot();
 })
